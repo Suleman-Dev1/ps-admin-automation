@@ -1,0 +1,252 @@
+{
+  "version": "2.0.0",
+  "updated_at": "2026-09-18T18:08:11.294494+00:00",
+  "theme": {
+    "firm_name": "Apex Professional Advisory",
+    "tagline": "Automated Administrative Onboarding & Verification",
+    "portal_title": "Secure Client Intake & Document Portal",
+    "primary_color": "#1e3a8a",
+    "secondary_color": "#0284c7",
+    "accent_color": "#f59e0b",
+    "background_color": "#f8fafc",
+    "surface_color": "#ffffff",
+    "card_border_color": "#e2e8f0",
+    "text_primary": "#0f172a",
+    "text_secondary": "#475569",
+    "success_color": "#16a34a",
+    "warning_color": "#d97706",
+    "danger_color": "#dc2626",
+    "font_family": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    "border_radius": "8px",
+    "dark_mode": false
+  },
+  "openai": {
+    "api_key_env_var": "OPENAI_API_KEY",
+    "api_key": "",
+    "model": "gpt-4o-mini",
+    "fallback_model": "gpt-3.5-turbo",
+    "temperature": 0.1,
+    "max_tokens": 1500,
+    "use_openai_for_extraction": true,
+    "use_openai_for_summary": true,
+    "use_openai_for_reminders": true
+  },
+  "compliance": {
+    "strict_mode": true,
+    "mandatory_disclaimer": "NOTICE: Information only \u2014 not professional tax, accounting, or legal advice. This administrative summary extracts factual data for review by licensed professionals.",
+    "confidence_review_threshold": 0.85,
+    "block_prescriptive_tax_advice": true,
+    "block_prescriptive_legal_advice": true
+  },
+  "intake_fields": [
+    {
+      "field_id": "business_type",
+      "label": "Business Structure",
+      "field_type": "select",
+      "options": [
+        "Ltd",
+        "Sole Trader",
+        "Partnership",
+        "LLP"
+      ],
+      "required": true,
+      "help_text": "Select your legal entity type."
+    },
+    {
+      "field_id": "service_requested",
+      "label": "Service Requested",
+      "field_type": "select",
+      "options": [
+        "Year-end accounts",
+        "VAT",
+        "Payroll",
+        "Self Assessment",
+        "Conveyancing",
+        "Corporate Advisory"
+      ],
+      "required": true,
+      "help_text": "Choose the primary administrative service you require."
+    },
+    {
+      "field_id": "turnover_band",
+      "label": "Annual Turnover Band",
+      "field_type": "select",
+      "options": [
+        "Under \u00a3100k",
+        "\u00a3100k - \u00a3250k",
+        "\u00a3250k - \u00a3500k",
+        "\u00a3500k - \u00a31m",
+        "\u00a31m - \u00a35m",
+        "\u00a35m+"
+      ],
+      "required": true,
+      "help_text": "Estimated gross revenue."
+    },
+    {
+      "field_id": "employee_count",
+      "label": "Employee Count",
+      "field_type": "number",
+      "required": true,
+      "min": 0,
+      "help_text": "Total number of employees on payroll."
+    },
+    {
+      "field_id": "relevant_date",
+      "label": "Accounting Year-End / Key Date",
+      "field_type": "date",
+      "required": false,
+      "help_text": "Your company year-end date or target milestone."
+    },
+    {
+      "field_id": "contact_name",
+      "label": "Contact Full Name",
+      "field_type": "text",
+      "required": true,
+      "placeholder": "e.g. John David Smith"
+    },
+    {
+      "field_id": "contact_email",
+      "label": "Contact Email Address",
+      "field_type": "email",
+      "required": true,
+      "placeholder": "e.g. john@example.co.uk"
+    },
+    {
+      "field_id": "contact_phone",
+      "label": "Phone Number",
+      "field_type": "tel",
+      "required": true,
+      "placeholder": "e.g. +44 20 7946 0912"
+    },
+    {
+      "field_id": "existing_provider",
+      "label": "Previous / Existing Provider",
+      "field_type": "text",
+      "required": false,
+      "placeholder": "e.g. Prior Accountant Ltd or None"
+    }
+  ],
+  "checklists": {
+    "Ltd": {
+      "Year-end accounts": {
+        "required_documents": [
+          "bank_statement",
+          "prior_year_accounts",
+          "payroll_summary",
+          "id",
+          "proof_of_address",
+          "vat_certificate"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "turnover_band",
+          "employee_count",
+          "contact"
+        ]
+      },
+      "VAT": {
+        "required_documents": [
+          "bank_statement",
+          "vat_certificate",
+          "id",
+          "proof_of_address"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "turnover_band",
+          "contact"
+        ]
+      },
+      "Payroll": {
+        "required_documents": [
+          "payroll_summary",
+          "id",
+          "bank_statement"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "employee_count",
+          "contact"
+        ]
+      }
+    },
+    "Sole Trader": {
+      "Self Assessment": {
+        "required_documents": [
+          "bank_statement",
+          "id",
+          "proof_of_address",
+          "expense_records"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "turnover_band",
+          "contact"
+        ]
+      },
+      "Year-end accounts": {
+        "required_documents": [
+          "bank_statement",
+          "id",
+          "proof_of_address",
+          "expense_records"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "turnover_band",
+          "contact"
+        ]
+      }
+    },
+    "Law Firm": {
+      "Conveyancing": {
+        "required_documents": [
+          "id",
+          "proof_of_address",
+          "source_of_funds",
+          "property_title_deeds"
+        ],
+        "required_form_fields": [
+          "business_type",
+          "service_requested",
+          "contact",
+          "property_address",
+          "transaction_value"
+        ]
+      }
+    }
+  },
+  "reminder_schedule": {
+    "chase_tiers": [
+      {
+        "tier": 1,
+        "days_elapsed": 2,
+        "tone": "polite",
+        "subject_template": "Action Required: Documents needed to complete your onboarding - {client_name}",
+        "headline": "Welcome to {firm_name} \u2014 Initial Document Request",
+        "message": "Thank you for starting your onboarding with us. To begin preparing your {service_requested}, our administrative intake team requires a few additional documents listed below."
+      },
+      {
+        "tier": 2,
+        "days_elapsed": 5,
+        "tone": "firm",
+        "subject_template": "Reminder: File review on hold pending outstanding documents - {client_name}",
+        "headline": "Onboarding Review On Hold",
+        "message": "We are writing to remind you that review of your {service_requested} file cannot begin until we receive the remaining required documents. Prompt submission ensures no deadline delays."
+      },
+      {
+        "tier": 3,
+        "days_elapsed": 9,
+        "tone": "urgent",
+        "subject_template": "FINAL NOTICE: Inactive file warning for {client_name} - Action required",
+        "headline": "Final Administrative Notice \u2014 Immediate Action Required",
+        "message": "This is our final follow-up regarding missing documentation for your {service_requested} onboarding. If these documents are not uploaded within 48 hours, your file will be marked inactive."
+      }
+    ]
+  }
+}

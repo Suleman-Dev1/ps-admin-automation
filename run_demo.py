@@ -29,6 +29,8 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 from contracts import ClientRecord, DocumentRecord, ChecklistConfig, ReminderRecord, SummaryRecord, ClientStatus
+from admin_config import admin_store
+from openai_client import openai_client
 from agent1_intake_crm.intake_service import IntakeService
 from agent1_intake_crm.crm_store import CRMStore
 from agent2_document.upload_portal import generate_upload_token, verify_upload_token, generate_upload_link
@@ -72,6 +74,38 @@ def main():
     print_banner("PROFESSIONAL SERVICES ADMIN AUTOMATION — LIVE DEMO", "=")
     print("Vertical: Accountancy Firm (Apex Trading Ltd Onboarding)")
     print("Boundary: Administrative Automation Only (No Regulated Advice)\n")
+
+    # -------------------------------------------------------------------------
+    # STEP 0: Dynamic Admin Governance & OpenAI Configuration
+    # -------------------------------------------------------------------------
+    print_step(0, "Dynamic Admin Configuration & OpenAI Engine Governance")
+    theme = admin_store.get_theme()
+    openai_cfg = admin_store.get_openai_settings()
+    intake_fields = admin_store.get_intake_fields()
+    checklists = admin_store.get_checklists()
+
+    print_info(f"Admin Store: Loaded from '{admin_store.config_file.name}'")
+    print_success(f"Dynamic Firm Branding: '{theme.get('firm_name')}' — '{theme.get('tagline')}'")
+    print_success(f"Dynamic Brand Theme: Primary={theme.get('primary_color')}, Secondary={theme.get('secondary_color')}, Font={theme.get('font_family')}")
+    print_success(f"Dynamic Intake Fields: {len(intake_fields)} fields configured in Admin")
+    print_success(f"Dynamic Checklists: {len(checklists)} legal verticals registered in Admin")
+    
+    # OpenAI Settings
+    has_key = openai_client.is_api_key_available()
+    print_info(f"AI Engine: OpenAI API (Model: {openai_cfg.get('model', 'gpt-4o-mini')}, Temp: {openai_cfg.get('temperature')})")
+    if has_key:
+        print_success("OpenAI API Status: LIVE KEY CONFIGURED (Direct calls to api.openai.com)")
+    else:
+        print_info("OpenAI API Status: Key optional — deterministic high-precision fallback engine active.")
+    print_success("Strict AI Boundary: System prompts strictly prevent autonomous tax/legal opinions.")
+
+    # Demonstrate live theme hot-reload from Admin
+    print_info("Testing Live Theme Hot-Reload from Admin:")
+    prev_color = theme.get("primary_color")
+    admin_store.update_theme({"primary_color": "#047857"}) # Emerald Green
+    print_success(f"Admin dynamically updated Primary Theme Color: {prev_color} -> {admin_store.get_theme().get('primary_color')}")
+    admin_store.update_theme({"primary_color": prev_color}) # Revert cleanly
+    print_success(f"Reverted to default brand color: {admin_store.get_theme().get('primary_color')}")
 
     # Initialize Services
     crm_store = CRMStore(in_memory=True)
