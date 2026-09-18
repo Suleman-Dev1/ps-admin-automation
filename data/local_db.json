@@ -276,8 +276,315 @@
       "receive_chase_alerts": false
     }
   ],
-  "clients": [],
-  "documents": [],
-  "reminders_sent": [],
-  "staff_summaries": []
+  "clients": [
+    {
+      "id": "sim_1789756301043_bksy",
+      "company_name": "Nexus Engineering Ltd",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "ready_for_review",
+      "contact": {
+        "name": "Eleanor Vance",
+        "email": "eleanor.vance@example.com",
+        "phone": "+44 20 7946 0991"
+      },
+      "custom_fields": {
+        "turnover_band": "£500k - £1.5M",
+        "payroll_employees": "12",
+        "accounting_software": "Xero",
+        "vat_registered": "Yes",
+        "companies_house_number": "08472910"
+      },
+      "missing_items": [],
+      "documents": [
+        {
+          "doc_id": "doc_sim_1",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "Barclays_Bank_Statement_2024.pdf",
+          "file_name": "Barclays_Bank_Statement_2024.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "bank_statement",
+          "confidence_score": 0.98,
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.048Z"
+        },
+        {
+          "doc_id": "doc_sim_2",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "Prior_Year_Financial_Accounts_2023.pdf",
+          "file_name": "Prior_Year_Financial_Accounts_2023.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "bank_statement",
+          "confidence_score": 0.98,
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.050Z"
+        },
+        {
+          "doc_id": "doc_sim_f_0",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "payroll_summary_nexus_verified.pdf",
+          "file_name": "payroll_summary_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "payroll_summary",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "payroll_summary",
+            "status": "complete",
+            "verified_at": "2026-09-18T18:31:41.053Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for payroll_summary",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.053Z"
+        },
+        {
+          "doc_id": "doc_sim_f_1",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "id_nexus_verified.pdf",
+          "file_name": "id_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "id",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "id",
+            "status": "complete",
+            "verified_at": "2026-09-18T18:31:41.054Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for id",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.054Z"
+        },
+        {
+          "doc_id": "doc_sim_f_2",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "proof_of_address_nexus_verified.pdf",
+          "file_name": "proof_of_address_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "proof_of_address",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "proof_of_address",
+            "status": "complete",
+            "verified_at": "2026-09-18T18:31:41.056Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for proof_of_address",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.056Z"
+        },
+        {
+          "doc_id": "doc_sim_f_3",
+          "client_id": "sim_1789756301043_bksy",
+          "filename": "vat_certificate_nexus_verified.pdf",
+          "file_name": "vat_certificate_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "vat_certificate",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "vat_certificate",
+            "status": "complete",
+            "verified_at": "2026-09-18T18:31:41.057Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for vat_certificate",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-18T18:31:41.057Z"
+        }
+      ],
+      "upload_token": "tok_sim_1789756301043_vmuezhzo",
+      "created_at": "2026-09-18T18:31:41.043Z",
+      "updated_at": "2026-09-18T18:31:41.058Z",
+      "metadata": {
+        "origin": "1_click_simulator"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "doc_id": "doc_sim_1",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "Barclays_Bank_Statement_2024.pdf",
+      "file_name": "Barclays_Bank_Statement_2024.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "bank_statement",
+      "confidence_score": 0.98,
+      "extracted_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "verification_status": "verified",
+      "verification_notes": "High quality bank statement parsed.",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.048Z"
+    },
+    {
+      "doc_id": "doc_sim_2",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "Prior_Year_Financial_Accounts_2023.pdf",
+      "file_name": "Prior_Year_Financial_Accounts_2023.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "bank_statement",
+      "confidence_score": 0.98,
+      "extracted_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "verification_status": "verified",
+      "verification_notes": "High quality bank statement parsed.",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.050Z"
+    },
+    {
+      "doc_id": "doc_sim_f_0",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "payroll_summary_nexus_verified.pdf",
+      "file_name": "payroll_summary_nexus_verified.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "payroll_summary",
+      "confidence_score": 0.96,
+      "extracted_fields": {
+        "doc_type": "payroll_summary",
+        "status": "complete",
+        "verified_at": "2026-09-18T18:31:41.053Z"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Standard administrative fulfillment for payroll_summary",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.053Z"
+    },
+    {
+      "doc_id": "doc_sim_f_1",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "id_nexus_verified.pdf",
+      "file_name": "id_nexus_verified.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "id",
+      "confidence_score": 0.96,
+      "extracted_fields": {
+        "doc_type": "id",
+        "status": "complete",
+        "verified_at": "2026-09-18T18:31:41.054Z"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Standard administrative fulfillment for id",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.054Z"
+    },
+    {
+      "doc_id": "doc_sim_f_2",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "proof_of_address_nexus_verified.pdf",
+      "file_name": "proof_of_address_nexus_verified.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "proof_of_address",
+      "confidence_score": 0.96,
+      "extracted_fields": {
+        "doc_type": "proof_of_address",
+        "status": "complete",
+        "verified_at": "2026-09-18T18:31:41.056Z"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Standard administrative fulfillment for proof_of_address",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.056Z"
+    },
+    {
+      "doc_id": "doc_sim_f_3",
+      "client_id": "sim_1789756301043_bksy",
+      "filename": "vat_certificate_nexus_verified.pdf",
+      "file_name": "vat_certificate_nexus_verified.pdf",
+      "file_type": "application/pdf",
+      "classified_type": "vat_certificate",
+      "confidence_score": 0.96,
+      "extracted_fields": {
+        "doc_type": "vat_certificate",
+        "status": "complete",
+        "verified_at": "2026-09-18T18:31:41.057Z"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Standard administrative fulfillment for vat_certificate",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-18T18:31:41.057Z"
+    }
+  ],
+  "reminders_sent": [
+    {
+      "id": "rem_1789756301053",
+      "client_id": "sim_1789756301043_bksy",
+      "reminder_number": 1,
+      "missing_items": [
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "eleanor.vance@example.com",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - Nexus Engineering Ltd",
+      "sent_at": "2026-09-18T18:31:41.053Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789756301047",
+      "client_id": "sim_1789756301043_bksy",
+      "reminder_number": 1,
+      "missing_items": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "eleanor.vance@example.com",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-18T18:31:41.047Z",
+      "channel": "email",
+      "status": "logged"
+    }
+  ],
+  "staff_summaries": [
+    {
+      "client_id": "sim_1789756301043_bksy",
+      "business_profile": "Eleanor Vance (Ltd), Turnover undefined, Headcount undefined",
+      "service_requested": "Year-end accounts",
+      "documents_received": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "key_figures_extracted": {},
+      "open_questions": [
+        "Confirm whether there have been any material changes in business activities or directors over the past 12 months",
+        "Verify primary commercial bank accounts and third-party payment gateways currently in operation"
+      ],
+      "flagged_items": [],
+      "advice_disclaimer": "This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.",
+      "generated_at": "2026-09-18T18:31:41.060Z"
+    }
+  ]
 }
