@@ -1,0 +1,21 @@
+{
+  "doc_id": "doc_poa_001",
+  "client_id": "client_apex_001",
+  "doc_type": "proof_of_address",
+  "period_covered": "2026-05-01 to 2026-08-01",
+  "key_fields": {
+    "utility_provider": "British Gas Business",
+    "account_number": "8820 1934 001",
+    "invoice_number": "BGB-98124501",
+    "invoice_date": "2026-08-10",
+    "account_name": "Apex Trading Ltd",
+    "attention": "John David Smith",
+    "service_address": "Suite 4, High Street Business Park, London EC2A 4NE",
+    "amount_due": 348.90,
+    "currency": "GBP",
+    "verification_status": "Valid UK Address Proof within 3 Months"
+  },
+  "confidence": 0.98,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T14:30:00Z"
+}

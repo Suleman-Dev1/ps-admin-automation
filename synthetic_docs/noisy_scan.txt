@@ -1,0 +1,10 @@
+~~~#### [BLURRY SCAN - LOW OCR CONFIDENCE] ####~~~
+b@nk st4t3m3nt ???
+Acc0unt: [ILLEGIBLE]
+S0rt C0de: ??-??-??
+B@l@nce: £[UNCERTAIN_OCR]~~~???
+cl0s1ng b@l@nc3: £***???
+Tr@ns@ct10n: [CORRUPT TEXT DATA STREAM]
+xdfrtgbhyujmnbvfcde wsxzaqplm
+Statement Period: [UNREADABLE]
+###### [SCAN RESOLUTION: 72 DPI - DEGRADED] ######

@@ -1,0 +1,16 @@
+HMRC PAYE SUMMARY P32 / ANNUAL PAYROLL REPORT
+Tax Year: 2023-2024
+Employer Name: Apex Global Trading Ltd
+Employer PAYE Reference: 123/AB456
+Accounts Office Reference: 123PA00045678
+
+Number of Employees: 4
+Total Gross Pay: £84,000.00
+Total Tax: £14,200.00
+Total Employee NIC: £6,820.00
+Total Employer NIC: £8,450.00
+Total Student Loan Deductions: £1,200.00
+Net Pay to Employees: £61,780.00
+
+Tax Period: Month 1 to Month 12 (Year-End Reconciliation)
+Submitted via RTI to HM Revenue & Customs.

@@ -1,0 +1,23 @@
+{
+  "doc_id": "doc_dir_id_001",
+  "client_id": "client_apex_001",
+  "doc_type": "director_id",
+  "period_covered": "2021-05-15 to 2031-05-14",
+  "key_fields": {
+    "document_type": "Passport",
+    "issuing_country": "GBR",
+    "surname": "Smith",
+    "given_names": "John David",
+    "full_name": "John David Smith",
+    "nationality": "British Citizen",
+    "date_of_birth": "1982-08-15",
+    "gender": "Male",
+    "passport_number": "554981203",
+    "issue_date": "2021-05-15",
+    "expiry_date": "2031-05-14",
+    "mrz_verified": true
+  },
+  "confidence": 0.97,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "doc_pya_001",
+  "client_id": "client_apex_001",
+  "doc_type": "prior_year_accounts",
+  "period_covered": "2024-01-01 to 2024-12-31",
+  "key_fields": {
+    "company_name": "Apex Trading Ltd",
+    "company_number": "08912345",
+    "financial_year_ended": "2024-12-31",
+    "turnover": 580000.00,
+    "cost_of_sales": 310000.00,
+    "gross_profit": 270000.00,
+    "administrative_expenses": 178500.00,
+    "operating_profit": 91500.00,
+    "corporation_tax": 17300.00,
+    "net_profit": 74200.00,
+    "total_net_assets": 116780.20,
+    "director_signatory": "John David Smith",
+    "currency": "GBP"
+  },
+  "confidence": 0.95,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

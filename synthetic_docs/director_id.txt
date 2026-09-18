@@ -1,0 +1,26 @@
+================================================================================
+BRITISH PASSPORT / PASSEPORT
+UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+================================================================================
+
+Type / Type:             P
+Country Code / Code:     GBR
+Passport No. / No.:      554981203
+
+Surname / Nom:           SMITH
+Given Names / Prenoms:   JOHN DAVID
+Nationality:             BRITISH CITIZEN
+Date of Birth:           15 AUG / AOU 1982
+Sex:                     M
+Place of Birth:          LONDON, UNITED KINGDOM
+Date of Issue:           15 MAY / MAI 2021
+Date of Expiry:          14 MAY / MAI 2031
+Authority:               HM PASSPO RT OFFICE
+
+--------------------------------------------------------------------------------
+MACHINE READABLE ZONE (MRZ):
+P<GBRSMITH<<JOHN<DAVID<<<<<<<<<<<<<<<<<<<<<<<
+5549812038GBR8208154M3105146<<<<<<<<<<<<<<02
+--------------------------------------------------------------------------------
+Security Verification: Hologram present, microprinting verified, biometric chip valid.
+Status: Valid UK Identity Document

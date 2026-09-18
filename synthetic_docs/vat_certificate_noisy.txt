@@ -1,0 +1,27 @@
+================================================================================
+H# REVENU3 & CU$T0MS
+C3RT1F1CAT3 OF VALU3 ADD3D TAX REG1STR@T10N  [SKEWED / RESOLUTION 120 DPI]
+================================================================================
+
+Regi$tration Deta!ls:
+--------------------------------------------------------------------------------
+VAT Reg No:                      GB 98? 6543 2~ [UNREADABLE SMUDGE / OCR NOISE]
+Effctve D@te:                    01 Ap?il 2019
+
+Leg@l Ent1ty Det@ils:
+--------------------------------------------------------------------------------
+Bu$iness N@me:                   AP3X TRAD!NG L_D ???
+C0mpany Reg No:                  0891234?
+Pr1ncipal Pl@ce of Bu$iness:     Su!te 4, H!gh Str33t Bus!ness P@rk
+                                 L0nd0n  EC2~ 4??  [BLEED THROUGH]
+                                 Un!ted K!ngd0m
+
+VAT Retvrn $chedule:
+--------------------------------------------------------------------------------
+Per10d / Fr3quency:              Qu@rt3rly [BLURRED TEXT]
+St@gger Gr0up:                   Gr0up 1 (M@rch/Jun3/S3pt3mb3r/D3c3mb3r)
+S!C C0de:                        469?? [PARTIALLY OBSCURED]
+
+[WARNING: OCR Engine Tesseract v5 Confidence Low: 65%]
+[Artifact: Document scanned at low angle, water damage detected bottom margin]
+================================================================================

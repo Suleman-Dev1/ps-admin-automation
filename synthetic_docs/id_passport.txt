@@ -1,0 +1,19 @@
+BRITISH PASSPORT / PASSEPORT
+UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND
+
+Type: P
+Code: GBR
+Passport No: 987654321
+Full Name: Jane Sarah Miller
+Surname: Miller
+Given Names: Jane Sarah
+Nationality: British Citizen
+Date of Birth: 15 Oct 1984
+Sex: F
+Place of Birth: London
+Date of Issue: 16 Nov 2022
+Authority: HMPO
+Date of Expiry: 15 Nov 2032
+Holder Signature: J. S. Miller
+P<GBRMILLER<<JANE<SARAH<<<<<<<<<<<<<<<<<<<<<
+9876543219GBR8410158F3211155<<<<<<<<<<<<<<02

@@ -1,0 +1,23 @@
+{
+  "doc_id": "doc_payroll_001",
+  "client_id": "client_apex_001",
+  "doc_type": "payroll_summary",
+  "period_covered": "2024-2025 Tax Year Month 12",
+  "key_fields": {
+    "company_name": "Apex Trading Ltd",
+    "paye_reference": "120/AT89123",
+    "tax_month": 12,
+    "tax_year": "2024-2025",
+    "employee_count": 5,
+    "gross_pay": 18400.00,
+    "paye_tax": 2450.00,
+    "employee_nic": 1120.00,
+    "employer_nic": 680.00,
+    "total_paye_nic_due": 4250.00,
+    "net_pay": 14830.00,
+    "currency": "GBP"
+  },
+  "confidence": 0.94,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

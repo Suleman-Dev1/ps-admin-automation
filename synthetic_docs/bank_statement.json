@@ -1,0 +1,21 @@
+{
+  "doc_id": "doc_bank_stmt_001",
+  "client_id": "client_apex_001",
+  "doc_type": "bank_statement",
+  "period_covered": "2024-01-01 to 2024-12-31",
+  "key_fields": {
+    "company_name": "Apex Trading Ltd",
+    "bank_name": "Barclays Bank UK PLC",
+    "sort_code": "20-04-15",
+    "account_number": "20491823",
+    "statement_period_months": 12,
+    "closing_balance": 42580.20,
+    "turnover": 620000.00,
+    "currency": "GBP",
+    "total_debits": 577419.80,
+    "total_credits": 620000.00
+  },
+  "confidence": 0.98,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

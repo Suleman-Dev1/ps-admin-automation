@@ -1,0 +1,19 @@
+{
+  "doc_id": "doc_vat_cert_001",
+  "client_id": "client_apex_001",
+  "doc_type": "vat_certificate",
+  "period_covered": "Effective from 2019-04-01",
+  "key_fields": {
+    "business_name": "Apex Trading Ltd",
+    "company_number": "08912345",
+    "vat_number": "GB 987 6543 21",
+    "effective_registration_date": "2019-04-01",
+    "return_frequency": "Quarterly",
+    "stagger_group": "Group 1 (March/June/September/December)",
+    "sic_code": "46900",
+    "trade_description": "Non-specialised wholesale trade"
+  },
+  "confidence": 0.96,
+  "needs_human_review": false,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

@@ -1,0 +1,24 @@
+BARCLAYS BANK UK PLC
+BUSINESS ACCOUNT STATEMENT
+
+Account Name: Apex Global Trading Ltd
+Account Number: 84920183
+Sort Code: 20-04-15
+Statement Period: 01 Jan 2024 to 31 Jan 2024
+Currency: GBP (£)
+
+OPENING BALANCE: £8,450.20
+Total Credits: £24,600.00
+Total Debits: £18,529.70
+CLOSING BALANCE: £14,520.50
+
+Transaction History:
+03 Jan 2024 - Client Payment Inv 1044 - Credit £5,200.00 - Bal £13,650.20
+12 Jan 2024 - Office Rent Jan - Debit £2,500.00 - Bal £11,150.20
+18 Jan 2024 - Tech Consulting Services - Credit £12,000.00 - Bal £23,150.20
+25 Jan 2024 - Payroll Net Transfer - Debit £14,029.70 - Bal £9,120.50
+30 Jan 2024 - Invoice 1045 Payment - Credit £7,400.00 - Bal £16,520.50
+31 Jan 2024 - HMRC VAT Payment - Debit £2,000.00 - Bal £14,520.50
+
+Balance Carried Forward: £14,520.50
+Barclays Bank UK PLC is authorised by the Prudential Regulation Authority.

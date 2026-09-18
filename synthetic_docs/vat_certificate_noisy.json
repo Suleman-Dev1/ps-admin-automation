@@ -1,0 +1,18 @@
+{
+  "doc_id": "doc_vat_cert_noisy_002",
+  "client_id": "client_apex_001",
+  "doc_type": "vat_certificate",
+  "period_covered": "Effective from 2019-04-01 (uncertain)",
+  "key_fields": {
+    "business_name": "AP3X TRAD!NG L_D",
+    "company_number": "0891234?",
+    "vat_number": "GB 98? 6543 2~",
+    "effective_registration_date": "2019-04-01",
+    "return_frequency": "Quarterly",
+    "stagger_group": "Group 1",
+    "sic_code": "469??"
+  },
+  "confidence": 0.65,
+  "needs_human_review": true,
+  "uploaded_at": "2026-09-18T10:00:00Z"
+}

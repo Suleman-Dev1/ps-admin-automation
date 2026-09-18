@@ -1,0 +1,141 @@
+[
+  {
+    "business_type": "Ltd",
+    "service": "Year-end accounts",
+    "required_documents": [
+      "bank_statement",
+      "prior_year_accounts",
+      "payroll_summary",
+      "id",
+      "proof_of_address",
+      "vat_certificate"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "turnover_band",
+      "employee_count",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Sole Trader",
+    "service": "Self Assessment",
+    "required_documents": [
+      "bank_statement",
+      "id",
+      "proof_of_address",
+      "expense_records"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "turnover_band",
+      "employee_count",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Law Firm",
+    "service": "Conveyancing",
+    "required_documents": [
+      "id",
+      "proof_of_address",
+      "source_of_funds",
+      "property_title_deeds"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "contact",
+      "property_address",
+      "transaction_value"
+    ]
+  },
+  {
+    "business_type": "Sole Trader",
+    "service": "Year-end accounts",
+    "required_documents": [
+      "bank_statement",
+      "id",
+      "proof_of_address",
+      "prior_year_accounts"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "turnover_band",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Partnership",
+    "service": "Year-end accounts",
+    "required_documents": [
+      "bank_statement",
+      "partnership_agreement",
+      "prior_year_accounts",
+      "id",
+      "proof_of_address"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "turnover_band",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Ltd",
+    "service": "VAT",
+    "required_documents": [
+      "bank_statement",
+      "sales_invoices",
+      "purchase_receipts",
+      "vat_certificate"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "relevant_date",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Ltd",
+    "service": "Payroll",
+    "required_documents": [
+      "payroll_summary",
+      "p45_p46_forms",
+      "pension_details",
+      "id"
+    ],
+    "required_form_fields": [
+      "business_type",
+      "service_requested",
+      "employee_count",
+      "contact"
+    ]
+  },
+  {
+    "business_type": "Limited Company",
+    "service": "Year-End Accounts & Tax",
+    "required_documents": [
+      "bank_statement",
+      "prior_year_accounts",
+      "payroll_summary",
+      "id",
+      "vat_certificate",
+      "proof_of_address"
+    ],
+    "required_form_fields": [
+      "company_name",
+      "company_number",
+      "contact_name",
+      "contact_email",
+      "contact_phone",
+      "turnover_band",
+      "employee_count"
+    ]
+  }
+]
