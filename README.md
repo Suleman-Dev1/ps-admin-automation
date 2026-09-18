@@ -1,99 +1,111 @@
-# Professional Services Admin Automation
+# Professional Services Admin Automation Platform
 
-A dynamic multi-agent administrative automation platform built for professional services firms (initial vertical: **Accountancy**, fully portable to **Law Firms**, **Consultancies**, etc., via dynamic Admin configuration rather than code changes).
+A production-grade, dynamic full-stack administrative automation platform built for professional services firms (initial vertical: **Accountancy**, fully portable to **Law Firms**, **Consultancies**, etc., via dynamic Admin configuration rather than code modifications).
 
----
-
-## ⚡ Key Updates: OpenAI Integration & Dynamic Admin System
-- **OpenAI API Integration (Not Claude)**:
-  - Document classification, structured extraction, and pre-meeting factual summaries are powered by **OpenAI** (`gpt-4o-mini`, `gpt-4o`, `gpt-3.5-turbo`).
-  - Zero external SDK dependencies: Communicates natively via Python standard library `urllib.request`.
-  - Configurable in the Admin panel with deterministic local fallback when no API key is provided.
-- **100% Dynamic — Everything Fetched from Admin**:
-  - **Dynamic Theme & CSS**: Firm colors (`--primary-color`, `--secondary-color`, `--bg-color`), typography, firm name, and logo are fetched in real-time from the Admin Store. Changing the theme in Admin immediately updates the client intake portal, upload links, and staff dashboards!
-  - **Dynamic Form Fields**: Form inputs, question labels, validation rules, and select options are defined in Admin and rendered dynamically.
-  - **Dynamic Checklists**: Document requirements per business structure (Ltd, Sole Trader, Law Firm, etc.) are dynamically maintained in Admin with zero code modifications.
-  - **Dynamic Follow-up Reminders**: Multi-tier escalation intervals (Day 2, Day 5, Day 9) and email messaging templates are managed in Admin.
+Powered by **Next.js 14+ (App Router)**, **TypeScript**, **Tailwind CSS**, **Supabase** (with zero-dependency local JSON engine fallback), **OpenAI API (`gpt-4o`)**, **Resend**, and **Cal.com** gated scheduling.
 
 ---
 
-## ⚖️ Hard Boundary (Non-Negotiable)
-> **ADMINISTRATIVE AUTOMATION ONLY**  
-> This system automates intake, secure document collection, classification, gap detection, escalating follow-up communications, and factual pre-meeting summaries.  
-> It **never** generates, implies, or simulates autonomous tax, accounting, legal, or regulated professional advice.  
-> All staff-facing and client-facing outputs carry a visible disclaimer:
-> *"NOTICE: Information only — not professional tax, accounting, or legal advice. This administrative summary extracts factual data for review by licensed professionals."*
+## ⚡ Highlights & Hard Requirements Fulfilled
+
+1. **100% Dynamic — Controlled from Admin Panel**:
+   - **Theme & Branding**: Firm name, colors (`--brand-primary`, `--brand-secondary`, `--brand-accent`), surface colors, font family, and border radius are fetched dynamically from the database and injected into CSS variables at runtime. Changing them in the Admin Panel immediately updates client portals and staff dashboards without rebuilds.
+   - **Verticals, Services & Dynamic Fields**: Business structures (Ltd, Sole Trader, Partnership, Law Firm) and service packages are managed in Admin. Intake form questions and required fields dynamically adapt per selection.
+   - **Dynamic Document Checklists**: Mandatory documents per business type and service are configurable in Admin with zero code modifications.
+   - **Dynamic Email Templates & Escalating Follow-ups**: Follow-up cadence (Day 2, Day 5, Day 9) and email templates with dynamic tokens (`{{client_name}}`, `{{missing_items}}`, `{{portal_link}}`, `{{firm_name}}`) are fully customizable.
+   - **OpenAI Prompt Settings**: System extraction prompts and summary generation prompts are editable in Admin.
+
+2. **OpenAI GPT-4o Multimodal Extraction (NOT Claude)**:
+   - Automated document classification (Bank Statements, Prior Year Accounts, Payroll P32/P60, ID/Passport, VAT Certificates, Utility Bills).
+   - Structured key field extraction (balances, turnover, VAT numbers, dates, confidence scores).
+   - Documents with confidence < 0.85 or poor quality are automatically flagged for staff review.
+
+3. **Gated Cal.com Meeting Booking**:
+   - Meeting booking is **strictly locked** while any mandatory onboarding items remain unsubmitted.
+   - Once all documents are uploaded and verified, the gated calendar unlocks automatically and launches pre-populated Cal.com booking.
+
+4. **⚖️ Non-Negotiable Compliance Boundary (Server-Enforced)**:
+   - System automates **ADMINISTRATION ONLY**.
+   - Strict server-side code prevents generation, simulation, or implication of regulated tax, accounting, or legal advice.
+   - A non-removable statutory disclaimer is permanently injected into all AI prompts, staff briefs, and client emails:
+     > *"This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice."*
+
+5. **Zero-Setup Resilient Architecture**:
+   - Ready to run immediately with `npm run dev` or `npm run build` without requiring Supabase or external API setup (`data/local_db.json` provides instantaneous persistence and fallback).
 
 ---
 
-## 🚀 Quickstart: Running the System
+## 🚀 Quickstart: Running the Web Application
 
-### Option A: Interactive Web App & Admin Control Center (Recommended)
+The application is stored directly on your Desktop at `/Users/macrorld/Desktop/ps-admin-automation`.
+
+### 1. Start the Next.js Full-Stack Application
 ```bash
-# 1. Navigate to the project on your Desktop
 cd ~/Desktop/ps-admin-automation
 
-# 2. Launch the dynamic web app
-python3 web_app.py
+# Start the live development server
+npm run dev
 ```
+
 Open your browser to:
-- **Admin Control Center**: [`http://127.0.0.1:8000/admin`](http://127.0.0.1:8000/admin) — Edit themes live, configure OpenAI model, view checklists, and trigger the 1-Click Live Simulation.
-- **Dynamic Client Intake Portal**: [`http://127.0.0.1:8000/intake`](http://127.0.0.1:8000/intake) — Live form rendered from Admin settings.
-- **Staff CRM & Briefings**: [`http://127.0.0.1:8000/staff`](http://127.0.0.1:8000/staff) — View pipelines, gap status, and briefings.
+- **System Launchpad**: [http://localhost:3000](http://localhost:3000)
+- **Admin Control Panel**: [http://localhost:3000/admin](http://localhost:3000/admin)
+  - 🎨 **Theme & Branding**: [http://localhost:3000/admin/theme](http://localhost:3000/admin/theme)
+  - 📂 **Verticals & Checklists**: [http://localhost:3000/admin/verticals](http://localhost:3000/admin/verticals)
+  - ✉️ **Emails & Escalations**: [http://localhost:3000/admin/emails](http://localhost:3000/admin/emails)
+  - 🤖 **OpenAI Prompts**: [http://localhost:3000/admin/ai](http://localhost:3000/admin/ai)
+  - 👥 **Staff Users**: [http://localhost:3000/admin/staff](http://localhost:3000/admin/staff)
+- **Dynamic Client Intake Portal**: [http://localhost:3000/intake](http://localhost:3000/intake)
+- **Staff CRM & Pipeline**: [http://localhost:3000/staff](http://localhost:3000/staff)
 
 ---
 
-### Option B: Terminal Demo Runner
+## 🧪 1-Click End-to-End Simulator
+
+Visit [http://localhost:3000/admin](http://localhost:3000/admin) and click **"Run Live 7-Step Simulation"** or run:
 ```bash
-# Run the complete end-to-end interactive CLI demo
-python3 run_demo.py
+curl -X POST http://localhost:3000/api/demo/simulate -H "Content-Type: application/json"
 ```
 
-### Option C: Automated Test Suite (60/60 Tests Passing)
+The simulator executes all 7 operational phases automatically:
+1. **Intake Registration**: Creates client record and initializes dynamic checklist for *Nexus Engineering Ltd*.
+2. **Welcome Dispatch & Multi-CRM Sync**: Formats dynamic email and syncs to Airtable & HubSpot.
+3. **OpenAI Document Extraction**: Ingests Barclays Bank Statement & Prior Accounts via GPT-4o, extracting turnover, profit, and balances.
+4. **Dynamic Gap Analysis**: Identifies remaining missing documents; evaluates Cal.com booking as **LOCKED**.
+5. **Escalation Reminder**: Dispatches 1st chase reminder via Resend with dynamic placeholder list.
+6. **Checklist Fulfillment**: Ingests remaining required documents; transitions status to `ready_for_review`.
+7. **Booking Unlock & Briefing**: Evaluates Cal.com booking as **UNLOCKED**; generates OpenAI 4-point administrative brief with statutory disclaimer.
+
+---
+
+## ⚙️ Environment Configuration (`.env.local`)
+
+To activate live external cloud services, configure `.env.local` (reference `.env.example`):
+
 ```bash
-# Run all tests across all agents
-python3 -m unittest discover -s . -p "test_*.py"
+# 1. OpenAI (Multimodal GPT-4o extraction & briefing)
+OPENAI_API_KEY=sk-...
 
-# Run the 6-point acceptance test suite
-python3 agent5_qa_compliance/acceptance_test.py
+# 2. Supabase (Optional: connects remote PostgreSQL & Storage)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+
+# 3. Resend (Email delivery)
+RESEND_API_KEY=re_...
+RESEND_FROM_EMAIL=onboarding@yourfirm.com
+
+# 4. CRM Synchronization
+AIRTABLE_API_KEY=pat...
+AIRTABLE_BASE_ID=app...
+HUBSPOT_ACCESS_TOKEN=pat-na1-...
+
+# 5. Cal.com Gated Booking
+NEXT_PUBLIC_CAL_USERNAME=apex-advisory
+NEXT_PUBLIC_CAL_EVENT_SLUG=30min-onboarding
 ```
 
----
-
-## 🏗️ Architecture & Dynamic Flow
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        ADMIN CONTROL CENTER                            │
-│  • Theme & Brand Colors    • Intake Form Fields   • Legal Checklists   │
-│  • OpenAI Model Settings   • Reminder Schedules   • Compliance Notices │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ (Dynamic Configuration Fetch)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│                        5-AGENT PIPELINE FLEET                          │
-├────────────────────────────────────────────────────────────────────────┤
-│  Agent 1: Intake & CRM          │ Fetches dynamic fields & checklists  │
-│  Agent 2: Document Processing   │ Uses OpenAI API for extraction       │
-│  Agent 3: Follow-up & Reminders │ Fetches dynamic escalation schedules │
-│  Agent 4: Scheduling & Summary  │ Uses OpenAI for staff briefing       │
-│  Agent 5: Compliance & QA       │ Audits hard boundaries & disclaimers │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 📋 Final Acceptance Criteria Verification (7/7 Passed)
-
-| Criterion | Target Requirement | Status | Verification Details |
-| :--- | :--- | :---: | :--- |
-| **Criterion 1** | Dummy client completes intake form | **PASS** | Validated for Apex Trading Ltd with dynamic fields |
-| **Criterion 2** | CRM record created automatically from form | **PASS** | `ClientRecord` provisioned, status `New` &rarr; `Awaiting Documents` |
-| **Criterion 3** | Client uploads synthetic documents | **PASS** | 5 documents ingested with OpenAI classification |
-| **Criterion 4** | System identifies deliberately missing item | **PASS** | Omitted `proof_of_address` flagged, status updated to `Chasing` |
-| **Criterion 5** | Real reminder generated for missing item | **PASS** | 3-tier escalating email artifacts generated with advice disclaimer |
-| **Criterion 6** | Staff summary prepared once checklist complete | **PASS** | Gap cleared, OpenAI briefing generated (£580k turnover, £42.5k bank balance), status updated to `Summary Sent` |
-| **Auxiliary** | Compliance gating & vertical portability | **PASS** | Low confidence flagged (< 0.85), advice patterns blocked, Law Firm config swapped without code changes |
+*Note: If any key is left unset, the platform seamlessly activates its local mock and offline fallback engine without errors.*
 
 ---
 
@@ -101,19 +113,49 @@ python3 agent5_qa_compliance/acceptance_test.py
 
 ```
 ps-admin-automation/
-├── admin_config.py                # Dynamic Admin configuration store & theme generator
-├── openai_client.py               # OpenAI API client (gpt-4o-mini) with prompt safety guardrails
-├── web_app.py                     # Dynamic Web App (/admin, /intake, /upload, /staff)
-├── run_demo.py                    # Live end-to-end interactive demo runner
-├── contracts.py                   # Authoritative shared dataclasses & schemas
-├── config/
-│   ├── admin_dynamic_config.json  # Stored dynamic configuration
-│   ├── checklists.json            # Swappable checklist definitions
-│   └── checklists.yaml            # YAML formatted checklist definitions
-├── agent1_intake_crm/             # Agent 1: Intake validation & atomic CRM persistence
-├── agent2_document/               # Agent 2: Tokenized upload portal (HMAC-SHA256) & OCR pipeline
-├── agent3_followup/               # Agent 3: Gap-detection engine & 3-tier escalating reminder dispatch
-├── agent4_scheduling_summary/     # Agent 4: Gated booking gate & pre-meeting staff briefing renderer
-├── agent5_qa_compliance/          # Agent 5: Compliance audit, synthetic docs & acceptance tests
-└── synthetic_docs/                # Synthetic test document pack & OCR fixtures
+├── app/
+│   ├── layout.tsx                    # Root layout with dynamic theme provider
+│   ├── page.tsx                      # Main launchpad and quick navigation
+│   ├── globals.css                   # Tailwind CSS styling with dynamic CSS vars
+│   ├── intake/page.tsx               # Dynamic client intake form
+│   ├── upload/[token]/page.tsx       # Secure tokenized client document upload portal
+│   ├── book/[token]/page.tsx         # Gated Cal.com meeting scheduling
+│   ├── staff/page.tsx                # Staff CRM pipeline dashboard
+│   ├── staff/clients/[id]/page.tsx   # Staff client detail, verification & briefing view
+│   ├── admin/
+│   │   ├── layout.tsx                # Admin tab navigation
+│   │   ├── page.tsx                  # Admin Overview & 1-Click Simulator UI
+│   │   ├── theme/page.tsx            # Live Theme & Color Editor with DOM preview
+│   │   ├── verticals/page.tsx        # Multi-vertical, services & form field builder
+│   │   ├── emails/page.tsx           # Email templates & escalation schedule editor
+│   │   ├── ai/page.tsx               # OpenAI prompt settings & immutable compliance banner
+│   │   └── staff/page.tsx            # Staff team management & alert preferences
+│   └── api/
+│       ├── admin/                    # Admin REST endpoints (theme, verticals, checklists, emails, ai, staff)
+│       ├── intake/submit/            # Client intake submission endpoint
+│       ├── upload/[token]/           # Document upload & OpenAI GPT-4o extraction
+│       ├── clients/                  # Clients list & detail endpoints
+│       ├── reminders/send-single/    # On-demand reminder trigger via Resend
+│       ├── summary/generate/         # OpenAI pre-meeting brief generator
+│       └── demo/simulate/            # 1-Click 7-step simulator engine
+├── components/
+│   ├── Navbar.tsx                    # Dynamic branded top navigation bar with statutory badge
+│   └── ThemeProvider.tsx             # Client-side dynamic CSS variable injector
+├── lib/
+│   ├── types.ts                      # Authoritative TypeScript types & contracts
+│   ├── db.ts                         # Dual-engine repository (Supabase + Local JSON store)
+│   ├── openai.ts                     # OpenAI GPT-4o multimodal client & compliance guard
+│   ├── resend.ts                     # Resend email dispatcher with template tokens
+│   ├── crm.ts                        # Airtable & HubSpot sync with local store
+│   └── cal.ts                        # Gated Cal.com booking rules engine
+├── supabase/
+│   ├── schema.sql                    # Production Postgres DDL (12 tables, RLS, indexes)
+│   └── seed.sql                      # Default vertical seeds (Accountancy + Legal)
+└── data/
+    └── local_db.json                 # File-backed local store for zero-setup persistence
 ```
+
+---
+
+## 🏛️ Statutory Disclaimer
+This platform strictly automates administrative workflows, intake collation, document extraction, and pre-meeting factual summaries. It does not provide, imply, or replace regulated tax, accounting, or legal advice. All outputs must be reviewed by licensed professionals.

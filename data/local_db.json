@@ -1,0 +1,283 @@
+{
+  "theme_settings": {
+    "firm_name": "Apex Professional Advisory",
+    "tagline": "Automated Administrative Onboarding & Verification",
+    "logo_url": "",
+    "primary_color": "#1e3a8a",
+    "secondary_color": "#0284c7",
+    "accent_color": "#f59e0b",
+    "background_color": "#f8fafc",
+    "surface_color": "#ffffff",
+    "border_color": "#e2e8f0",
+    "text_primary": "#0f172a",
+    "text_secondary": "#475569",
+    "font_family": "'Inter', sans-serif",
+    "border_radius": "8px",
+    "updated_at": "2026-09-18T18:30:32.849Z"
+  },
+  "business_types": [
+    {
+      "id": "bt_ltd",
+      "name": "Ltd",
+      "description": "Private Limited Company incorporated in the UK"
+    },
+    {
+      "id": "bt_sole_trader",
+      "name": "Sole Trader",
+      "description": "Self-employed individual"
+    },
+    {
+      "id": "bt_partnership",
+      "name": "Partnership",
+      "description": "Traditional or limited liability partnership"
+    },
+    {
+      "id": "bt_law_firm",
+      "name": "Law Firm",
+      "description": "Legal entity requiring conveyancing / transaction onboarding"
+    }
+  ],
+  "services": [
+    {
+      "id": "srv_year_end",
+      "name": "Year-end accounts",
+      "description": "Statutory year-end accounts and corporate tax filing"
+    },
+    {
+      "id": "srv_vat",
+      "name": "VAT",
+      "description": "Quarterly VAT reporting and return submissions"
+    },
+    {
+      "id": "srv_payroll",
+      "name": "Payroll",
+      "description": "Monthly payroll, RTI, and PAYE filings"
+    },
+    {
+      "id": "srv_self_assessment",
+      "name": "Self Assessment",
+      "description": "Personal director and self-employed tax return"
+    },
+    {
+      "id": "srv_conveyancing",
+      "name": "Conveyancing",
+      "description": "Commercial and residential property transaction onboarding"
+    }
+  ],
+  "checklist_config": [
+    {
+      "id": "cfg_ltd_year_end",
+      "business_type_id": "bt_ltd",
+      "service_id": "srv_year_end",
+      "business_type_name": "Ltd",
+      "service_name": "Year-end accounts",
+      "required_documents": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "required_fields": [
+        {
+          "field_id": "turnover_band",
+          "label": "Annual Turnover Band",
+          "field_type": "select",
+          "options": [
+            "Under £100k",
+            "£100k - £250k",
+            "£250k - £500k",
+            "£500k - £1m",
+            "£1m - £5m",
+            "£5m+"
+          ],
+          "required": true
+        },
+        {
+          "field_id": "employee_count",
+          "label": "Number of Employees",
+          "field_type": "number",
+          "required": true,
+          "min": 0
+        },
+        {
+          "field_id": "relevant_date",
+          "label": "Financial Year-End Date",
+          "field_type": "date",
+          "required": false
+        },
+        {
+          "field_id": "existing_provider",
+          "label": "Previous Accountant",
+          "field_type": "text",
+          "required": false,
+          "placeholder": "e.g. Previous Firm Ltd or None"
+        }
+      ]
+    },
+    {
+      "id": "cfg_sole_trader_self_assessment",
+      "business_type_id": "bt_sole_trader",
+      "service_id": "srv_self_assessment",
+      "business_type_name": "Sole Trader",
+      "service_name": "Self Assessment",
+      "required_documents": [
+        "bank_statement",
+        "id",
+        "proof_of_address",
+        "expense_records"
+      ],
+      "required_fields": [
+        {
+          "field_id": "turnover_band",
+          "label": "Estimated Annual Revenue",
+          "field_type": "select",
+          "options": [
+            "Under £50k",
+            "£50k - £100k",
+            "£100k - £250k",
+            "£250k+"
+          ],
+          "required": true
+        },
+        {
+          "field_id": "utr_number",
+          "label": "Unique Taxpayer Reference (UTR)",
+          "field_type": "text",
+          "required": false,
+          "placeholder": "10-digit UTR"
+        }
+      ]
+    },
+    {
+      "id": "cfg_law_firm_conveyancing",
+      "business_type_id": "bt_law_firm",
+      "service_id": "srv_conveyancing",
+      "business_type_name": "Law Firm",
+      "service_name": "Conveyancing",
+      "required_documents": [
+        "id",
+        "proof_of_address",
+        "source_of_funds",
+        "property_title_deeds"
+      ],
+      "required_fields": [
+        {
+          "field_id": "property_address",
+          "label": "Property Transaction Address",
+          "field_type": "text",
+          "required": true
+        },
+        {
+          "field_id": "transaction_value",
+          "label": "Estimated Property Value (£)",
+          "field_type": "number",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "email_templates": [
+    {
+      "id": "tpl_checklist_initial",
+      "template_type": "checklist_initial",
+      "subject": "Action Required: Welcome to {{firm_name}} — Documents required for {{service}}",
+      "headline": "Welcome to {{firm_name}}",
+      "body_text": "Thank you for starting your onboarding with us. To begin preparing your {{service}}, our administrative team requires a few initial documents listed below. Please upload them using your personal secure portal link.",
+      "cta_button_text": "Open Secure Upload Portal"
+    },
+    {
+      "id": "tpl_reminder_chase_1",
+      "template_type": "reminder_chase_1",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - {{client_name}}",
+      "headline": "Onboarding Check-In",
+      "body_text": "We hope you are well. This is a gentle reminder that we are still awaiting the following documents to proceed with your {{service}}: {{missing_items}}.",
+      "cta_button_text": "Upload Missing Documents"
+    },
+    {
+      "id": "tpl_reminder_chase_2",
+      "template_type": "reminder_chase_2",
+      "subject": "Important: File review on hold pending outstanding documents - {{client_name}}",
+      "headline": "File Review On Hold",
+      "body_text": "Please be advised that administrative review of your {{service}} file cannot commence until all required documents are received. Missing items: {{missing_items}}.",
+      "cta_button_text": "Complete Upload Now"
+    },
+    {
+      "id": "tpl_reminder_chase_3",
+      "template_type": "reminder_chase_3",
+      "subject": "FINAL NOTICE: Inactive file warning for {{client_name}} - Action required",
+      "headline": "Final Administrative Notice",
+      "body_text": "This is our final notification regarding outstanding documentation for your {{service}}. If missing items ({{missing_items}}) are not uploaded within 48 hours, your onboarding file will be closed.",
+      "cta_button_text": "Submit Urgent Documents"
+    },
+    {
+      "id": "tpl_staff_summary",
+      "template_type": "staff_summary",
+      "subject": "Onboarding Complete: Staff Pre-Meeting Briefing for {{client_name}} ({{service}})",
+      "headline": "Pre-Meeting Staff Briefing",
+      "body_text": "The client has successfully uploaded all required documents. A pre-meeting factual summary has been compiled by the administrative AI pipeline and attached for your review.",
+      "cta_button_text": "View Client Profile in CRM"
+    }
+  ],
+  "reminder_schedule": {
+    "id": "default_schedule",
+    "auto_send_enabled": true,
+    "tiers": [
+      {
+        "tier": 1,
+        "days_elapsed": 2,
+        "tone": "polite",
+        "subject": "Friendly Reminder: Documents needed to complete your onboarding - {{client_name}}",
+        "headline": "Onboarding Check-In",
+        "body_text": "We hope you are well. This is a gentle reminder that we are still awaiting the following documents to proceed with your {{service}}: {{missing_items}}."
+      },
+      {
+        "tier": 2,
+        "days_elapsed": 5,
+        "tone": "firm",
+        "subject": "Important: File review on hold pending outstanding documents - {{client_name}}",
+        "headline": "File Review On Hold",
+        "body_text": "Please be advised that administrative review of your {{service}} file cannot commence until all required documents are received. Missing items: {{missing_items}}."
+      },
+      {
+        "tier": 3,
+        "days_elapsed": 9,
+        "tone": "urgent",
+        "subject": "FINAL NOTICE: Inactive file warning for {{client_name}} - Action required",
+        "headline": "Final Administrative Notice",
+        "body_text": "This is our final notification regarding outstanding documentation for your {{service}}. If missing items ({{missing_items}}) are not uploaded within 48 hours, your onboarding file will be closed."
+      }
+    ]
+  },
+  "ai_prompt_settings": {
+    "id": "default_ai_settings",
+    "system_extraction_prompt": "You are an administrative data extraction engine for a professional services firm. You analyze uploaded documents and extract structured facts (dates, figures, entity names, reference numbers) into strictly valid JSON.",
+    "system_summary_prompt": "You are an administrative assistant preparing a factual pre-meeting briefing for a professional advisor. Synthesize the client profile and extracted document facts into a concise structured briefing.",
+    "model": "gpt-4o",
+    "temperature": 0.1,
+    "fixed_compliance_boundary": "NON-NEGOTIABLE COMPLIANCE BOUNDARY (Server-Enforced): This system automates ADMINISTRATION ONLY. You must NEVER generate, imply, or simulate autonomous tax, accounting, legal, or other regulated professional advice. All outputs are factual extraction, status tracking, and summarization — never recommendations or judgments requiring a licensed professional. Every output must carry the mandatory disclaimer: \"This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.\""
+  },
+  "staff_users": [
+    {
+      "id": "staff_001",
+      "name": "Sarah Jenkins, FCA",
+      "email": "sarah.jenkins@apex-accountants.co.uk",
+      "role": "admin",
+      "receive_summaries": true,
+      "receive_chase_alerts": true
+    },
+    {
+      "id": "staff_002",
+      "name": "Marcus Vance",
+      "email": "marcus.vance@apex-accountants.co.uk",
+      "role": "accountant",
+      "receive_summaries": true,
+      "receive_chase_alerts": false
+    }
+  ],
+  "clients": [],
+  "documents": [],
+  "reminders_sent": [],
+  "staff_summaries": []
+}
