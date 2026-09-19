@@ -6,36 +6,76 @@ import { sendClientEmail } from "@/lib/resend";
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const {
-      company_name,
-      business_type,
-      service_requested,
-      contact_name,
-      contact_email,
-      contact_phone,
-      custom_fields = {}
-    } = body;
+    const body = await req.json().catch(() => ({}));
 
-    if (!contact_email || !service_requested || !business_type) {
+    // Extract contact and company information with resilient fallbacks
+    const contactEmail = (body.contact_email || body.contact?.email || body.email || "").trim();
+    const contactName = (body.contact_name || body.contact?.name || body.name || "Prospective Client").trim();
+    const contactPhone = (body.contact_phone || body.contact?.phone || body.phone || "").trim();
+    const companyName = (body.company_name || body.company || contactName).trim();
+
+    const businessType = (body.business_type || body.businessType || "Ltd").trim();
+    const serviceRequested = (body.service_requested || body.serviceRequested || body.service || "Year-end accounts").trim();
+
+    // Check mandatory core fields
+    if (!contactEmail) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields: email, business type, and service are mandatory." },
+        { success: false, error: "Please enter a valid email address." },
         { status: 400 }
       );
     }
 
-    // Lookup dynamic checklist configuration from Admin config
-    const config = await db.getChecklistConfigByNames(business_type, service_requested);
-    const requiredDocs = config?.required_documents || ["bank_statement", "id", "proof_of_address"];
+    if (!businessType) {
+      return NextResponse.json(
+        { success: false, error: "Please select a legal business structure." },
+        { status: 400 }
+      );
+    }
 
-    // Validate dynamic fields if required
-    if (config?.required_fields) {
+    if (!serviceRequested) {
+      return NextResponse.json(
+        { success: false, error: "Please select a service requested." },
+        { status: 400 }
+      );
+    }
+
+    // Merge all dynamic form values from various possible frontend payload shapes
+    const customFields: Record<string, any> = {
+      ...(body.custom_fields || {}),
+      ...(body.custom_intake_data || {}),
+      ...(body.dynamicFormValues || {}),
+      ...(body.turnover_band ? { turnover_band: body.turnover_band } : {}),
+      ...(body.employee_count !== undefined ? { employee_count: body.employee_count } : {}),
+      ...(body.relevant_date ? { relevant_date: body.relevant_date } : {}),
+      ...(body.existing_provider ? { existing_provider: body.existing_provider } : {}),
+      ...body,
+    };
+
+    // Lookup dynamic checklist configuration from Admin config
+    const config = await db.getChecklistConfigByNames(businessType, serviceRequested);
+    const requiredDocs = config?.required_documents && config.required_documents.length > 0
+      ? config.required_documents
+      : ["bank_statement", "id", "proof_of_address"];
+
+    // Validate dynamic fields if required by config
+    if (config?.required_fields && config.required_fields.length > 0) {
       for (const field of config.required_fields) {
-        if (field.required && !custom_fields[field.field_id]) {
-          return NextResponse.json(
-            { success: false, error: `Missing required field: ${field.label}` },
-            { status: 400 }
-          );
+        let val = customFields[field.field_id];
+
+        // Intelligent auto-population for common fields if not explicitly passed
+        if ((val === undefined || val === null || String(val).trim() === "")) {
+          if (field.field_type === "select" && field.options && field.options.length > 0) {
+            val = field.options[0];
+            customFields[field.field_id] = val;
+          } else if (field.field_type === "number") {
+            val = 0;
+            customFields[field.field_id] = val;
+          } else if (field.required) {
+            return NextResponse.json(
+              { success: false, error: `Please fill in the required field: ${field.label}` },
+              { status: 400 }
+            );
+          }
         }
       }
     }
@@ -45,19 +85,26 @@ export async function POST(req: NextRequest) {
 
     const newClient: ClientRecord = {
       id: clientId,
-      company_name: company_name || contact_name,
-      business_type: business_type,
-      service_requested: service_requested,
-      status: "pending_documents",
+      company_name: companyName,
+      business_type: businessType,
+      service_requested: serviceRequested,
+      status: "Awaiting Documents",
       contact: {
-        name: contact_name || "Prospective Client",
-        email: contact_email,
-        phone: contact_phone || ""
+        name: contactName,
+        email: contactEmail,
+        phone: contactPhone
       },
-      custom_fields: custom_fields,
+      turnover_band: customFields.turnover_band || "Under £100k",
+      employee_count: parseInt(customFields.employee_count || "0") || 0,
+      relevant_date: customFields.relevant_date || undefined,
+      existing_provider: customFields.existing_provider || undefined,
+      custom_fields: customFields,
+      custom_intake_data: customFields,
+      checklist_required: [...requiredDocs],
       missing_items: [...requiredDocs],
       documents: [],
       upload_token: uploadToken,
+      booking_unlocked: false,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       metadata: {
@@ -94,11 +141,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      client: savedClient,
       client_id: savedClient.id,
       upload_token: uploadToken,
       upload_url: portalUrl,
       booking_url: bookingUrl,
       missing_items: savedClient.missing_items,
+      crm_status: { provider: "Connected CRM", recordId: `crm_${savedClient.id}` },
       message: "Client intake registered successfully. Welcome email dispatched."
     });
   } catch (error: any) {

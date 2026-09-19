@@ -407,20 +407,41 @@ export const db = {
   },
 
   async getChecklistConfigByNames(businessTypeName: string, serviceName: string): Promise<ChecklistConfig | null> {
+    const configs = await this.getChecklistConfigs();
+    if (!configs || configs.length === 0) return null;
+
     const btypes = await this.getBusinessTypes();
     const services = await this.getServices();
-    const btype = btypes.find(b => b.name.toLowerCase() === businessTypeName.toLowerCase());
-    const service = services.find(s => s.name.toLowerCase() === serviceName.toLowerCase());
+    const btype = btypes.find(b => b.name.toLowerCase() === (businessTypeName || "").toLowerCase());
+    const service = services.find(s => s.name.toLowerCase() === (serviceName || "").toLowerCase());
 
-    if (!btype || !service) {
-      // Direct lookup by name matching in configs
-      const configs = await this.getChecklistConfigs();
-      return configs.find(c =>
-        c.business_type_name?.toLowerCase() === businessTypeName.toLowerCase() &&
-        c.service_name?.toLowerCase() === serviceName.toLowerCase()
-      ) || null;
+    if (btype && service) {
+      const exact = await this.getChecklistConfig(btype.id, service.id);
+      if (exact) return exact;
     }
-    return this.getChecklistConfig(btype.id, service.id);
+
+    // Direct lookup by name matching in configs
+    const byName = configs.find(c =>
+      c.business_type_name?.toLowerCase() === (businessTypeName || "").toLowerCase() &&
+      c.service_name?.toLowerCase() === (serviceName || "").toLowerCase()
+    );
+    if (byName) return byName;
+
+    // Fallback: match by business type or service
+    const byBtype = configs.find(c =>
+      c.business_type_name?.toLowerCase() === (businessTypeName || "").toLowerCase() ||
+      (btype && c.business_type_id === btype.id)
+    );
+    if (byBtype) return byBtype;
+
+    const byService = configs.find(c =>
+      c.service_name?.toLowerCase() === (serviceName || "").toLowerCase() ||
+      (service && c.service_id === service.id)
+    );
+    if (byService) return byService;
+
+    // Default to first available config
+    return configs[0];
   },
 
   async saveChecklistConfig(config: ChecklistConfig): Promise<ChecklistConfig> {

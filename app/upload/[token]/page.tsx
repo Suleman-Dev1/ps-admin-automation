@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import { Upload, FileCheck, AlertTriangle, CheckCircle2, Loader2, Lock, ArrowRight, ShieldCheck } from "lucide-react";
+import { Upload, FileCheck, AlertTriangle, CheckCircle2, Loader2, Lock, ArrowRight, FileUp, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 
 export default function TokenizedUploadPage() {
@@ -17,6 +17,11 @@ export default function TokenizedUploadPage() {
 
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<any>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // File upload input state
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Text / synthetic file simulator input
   const [syntheticDocType, setSyntheticDocType] = useState("bank_statement");
@@ -31,6 +36,9 @@ export default function TokenizedUploadPage() {
       if (res.ok) {
         const data = await res.json();
         setClient(data.client);
+        if (data.client?.missing_items?.length > 0) {
+          setSyntheticDocType(data.client.missing_items[0]);
+        }
       } else {
         const data = await res.json();
         setError(data.error || "Invalid or expired upload link.");
@@ -48,13 +56,26 @@ export default function TokenizedUploadPage() {
 
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUploading(true);
+    setUploadError(null);
     setUploadResult(null);
+
+    if (!selectedFile && !fileContent.trim()) {
+      setUploadError("Please choose a file or enter document text to upload.");
+      return;
+    }
+
+    setUploading(true);
 
     const formData = new FormData();
     formData.append("doc_type_hint", syntheticDocType);
-    formData.append("text_content", fileContent);
-    formData.append("filename", `${syntheticDocType}.txt`);
+
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+      formData.append("filename", selectedFile.name);
+    } else {
+      formData.append("text_content", fileContent);
+      formData.append("filename", `${syntheticDocType}.txt`);
+    }
 
     try {
       const res = await fetch(`/api/upload/${token}`, {
@@ -66,18 +87,21 @@ export default function TokenizedUploadPage() {
       if (res.ok && data.success) {
         setUploadResult(data);
         setFileContent("");
+        setSelectedFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
         fetchClientData();
       } else {
-        alert("Upload error: " + (data.error || "Unknown"));
+        setUploadError(data.error || "Upload could not be processed.");
       }
     } catch (err: any) {
-      alert("Upload failed: " + err.message);
+      setUploadError("Upload failed: " + err.message);
     } finally {
       setUploading(false);
     }
   };
 
   const handleQuickSynthetic = async (type: string, content: string) => {
+    setUploadError(null);
     setUploading(true);
     setUploadResult(null);
 
@@ -96,9 +120,11 @@ export default function TokenizedUploadPage() {
       if (res.ok && data.success) {
         setUploadResult(data);
         fetchClientData();
+      } else {
+        setUploadError(data.error || "Synthetic upload failed");
       }
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      setUploadError("Upload failed: " + err.message);
     } finally {
       setUploading(false);
     }
@@ -126,7 +152,9 @@ export default function TokenizedUploadPage() {
     );
   }
 
-  const checklist: string[] = client.checklist_required || [];
+  const checklist: string[] = client.checklist_required && client.checklist_required.length > 0
+    ? client.checklist_required
+    : (client.missing_items || []);
   const missing: string[] = client.missing_items || [];
   const isComplete = missing.length === 0 && checklist.length > 0;
 
@@ -144,14 +172,14 @@ export default function TokenizedUploadPage() {
               Upload Onboarding Documents
             </h1>
             <p className="text-xs text-brand-textSecondary mt-0.5">
-              Client: <strong>{client.contact?.name}</strong> • Entity: {client.business_type} • Service: {client.service_requested}
+              Client: <strong>{client.company_name || client.contact?.name}</strong> • Entity: {client.business_type} • Service: {client.service_requested}
             </p>
           </div>
           <div className="text-right">
             <div className="text-[11px] text-slate-500 uppercase font-semibold">Lifecycle Status</div>
             <span
               className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                client.status === "Ready" || client.status === "Meeting Booked" || client.status === "Summary Sent"
+                client.status === "Ready" || client.status === "Meeting Booked" || client.status === "Summary Sent" || client.status === "ready_for_review"
                   ? "bg-emerald-100 text-emerald-800"
                   : "bg-amber-100 text-amber-800"
               }`}
@@ -164,7 +192,7 @@ export default function TokenizedUploadPage() {
         {/* Dynamic Checklist Tracker */}
         <div className="mt-4">
           <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-brand-textSecondary mb-2">
-            <span>Required Checklist ({checklist.length - missing.length} / {checklist.length} received)</span>
+            <span>Required Checklist ({Math.max(0, checklist.length - missing.length)} / {checklist.length} received)</span>
             <span className={isComplete ? "text-emerald-600" : "text-amber-600"}>
               {isComplete ? "✓ All Documents Fulfilled" : `${missing.length} Missing Items`}
             </span>
@@ -186,7 +214,7 @@ export default function TokenizedUploadPage() {
                   ) : (
                     <FileCheck className="w-3 h-3 text-emerald-600" />
                   )}
-                  <span>{item}</span>
+                  <span className="capitalize">{item.replace(/_/g, " ")}</span>
                   <span className="text-[10px] font-bold uppercase">{isMissing ? "(Missing)" : "(Received)"}</span>
                 </span>
               );
@@ -223,9 +251,19 @@ export default function TokenizedUploadPage() {
           Upload & OpenAI Vision/Text Extraction
         </h2>
 
+        {uploadError && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded text-red-800 text-xs font-semibold flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+            <span>{uploadError}</span>
+          </div>
+        )}
+
         {/* Quick Upload Test Buttons (Synthetic Documents) */}
         <div className="p-4 bg-slate-50 border border-slate-200 rounded-brand space-y-2">
-          <div className="text-xs font-bold text-slate-700">Quick Test Synthetic Documents:</div>
+          <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+            <span>Quick Test Synthetic Documents (Instant Ingestion):</span>
+          </div>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
@@ -308,17 +346,17 @@ export default function TokenizedUploadPage() {
               disabled={uploading}
               className="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold hover:bg-emerald-100 disabled:opacity-50"
             >
-              + Upload Proof of Address (Missing Gap Resolver)
+              + Upload Proof of Address
             </button>
           </div>
         </div>
 
-        {/* Custom Text / File Input */}
+        {/* Custom File or Text Input Form */}
         <form onSubmit={handleFileUpload} className="space-y-4 pt-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold uppercase text-brand-textPrimary mb-1">
-                Document Type Classification
+                Target Checklist Item
               </label>
               <select
                 value={syntheticDocType}
@@ -327,23 +365,56 @@ export default function TokenizedUploadPage() {
               >
                 {checklist.map((item) => (
                   <option key={item} value={item}>
-                    {item} {missing.includes(item) ? "(Missing)" : "(Received)"}
+                    {item.replace(/_/g, " ")} {missing.includes(item) ? "(Missing)" : "(Received)"}
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase text-brand-textPrimary mb-1">
+                Attach File (PDF, Image, or TXT)
+              </label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  setSelectedFile(file);
+                  if (file) setUploadError(null);
+                }}
+                className="w-full px-2 py-1 text-xs border border-brand-border rounded bg-white"
+              />
+              {selectedFile && (
+                <div className="flex items-center justify-between text-[11px] text-emerald-700 mt-1">
+                  <span>Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedFile(null);
+                      if (fileInputRef.current) fileInputRef.current.value = "";
+                    }}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold uppercase text-brand-textPrimary mb-1">
-              Document Text Payload / OCR Input
+              Or Paste Document Text / OCR Content
             </label>
             <textarea
-              rows={4}
+              rows={3}
               value={fileContent}
-              onChange={(e) => setFileContent(e.target.value)}
-              placeholder="Paste document text or OCR payload here..."
-              required
+              onChange={(e) => {
+                setFileContent(e.target.value);
+                if (e.target.value.trim()) setUploadError(null);
+              }}
+              placeholder="Paste document text or synthetic OCR payload here..."
               className="w-full px-3 py-2 text-xs rounded border border-brand-border font-mono bg-white"
             />
           </div>
@@ -355,7 +426,7 @@ export default function TokenizedUploadPage() {
             style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
           >
             {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-            <span>{uploading ? "Extracting with OpenAI gpt-4o..." : "Upload & Process with OpenAI"}</span>
+            <span>{uploading ? "Extracting with OpenAI gpt-4o..." : "Upload Document & Process with OpenAI"}</span>
           </button>
         </form>
 
@@ -363,22 +434,22 @@ export default function TokenizedUploadPage() {
         {uploadResult && (
           <div className="mt-4 p-4 rounded-brand bg-slate-900 text-white text-xs font-mono space-y-2">
             <div className="flex items-center justify-between text-emerald-400 font-bold">
-              <span>✓ OpenAI Extraction Succeeded ({uploadResult.extracted?.source})</span>
-              <span>Confidence: {(uploadResult.extracted?.confidence * 100).toFixed(0)}%</span>
+              <span>✓ OpenAI Extraction Succeeded ({uploadResult.extracted?.source || "OpenAI GPT-4o"})</span>
+              <span>Confidence: {((uploadResult.extracted?.confidence || uploadResult.extraction?.confidence_score || 0.95) * 100).toFixed(0)}%</span>
             </div>
             <div>
-              <strong>Classified Doc Type:</strong> {uploadResult.extracted?.doc_type}
+              <strong>Classified Doc Type:</strong> {uploadResult.extracted?.doc_type || uploadResult.document?.classified_type}
             </div>
             <div>
-              <strong>Period Covered:</strong> {uploadResult.extracted?.period_covered}
+              <strong>Period Covered:</strong> {uploadResult.extracted?.period_covered || "Current"}
             </div>
             <div>
-              <strong>Needs Human Review:</strong> {uploadResult.extracted?.needs_human_review ? "YES (Low Confidence)" : "NO"}
+              <strong>Needs Human Review:</strong> {uploadResult.extracted?.needs_human_review ? "YES (Flagged)" : "NO"}
             </div>
             <div>
               <strong>Key Extracted Fields:</strong>
               <pre className="text-blue-300 mt-1 whitespace-pre-wrap">
-                {JSON.stringify(uploadResult.extracted?.key_fields, null, 2)}
+                {JSON.stringify(uploadResult.extracted?.key_fields || uploadResult.document?.key_fields || {}, null, 2)}
               </pre>
             </div>
           </div>

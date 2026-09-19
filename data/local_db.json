@@ -248,15 +248,17 @@
         "headline": "Final Administrative Notice",
         "body_text": "This is our final notification regarding outstanding documentation for your {{service}}. If missing items ({{missing_items}}) are not uploaded within 48 hours, your onboarding file will be closed."
       }
-    ]
+    ],
+    "updated_at": "2026-09-18T18:36:08.689Z"
   },
   "ai_prompt_settings": {
     "id": "default_ai_settings",
     "system_extraction_prompt": "You are an administrative data extraction engine for a professional services firm. You analyze uploaded documents and extract structured facts (dates, figures, entity names, reference numbers) into strictly valid JSON.",
     "system_summary_prompt": "You are an administrative assistant preparing a factual pre-meeting briefing for a professional advisor. Synthesize the client profile and extracted document facts into a concise structured briefing.",
-    "model": "gpt-4o",
+    "model": "gpt-3.5-turbo",
     "temperature": 0.1,
-    "fixed_compliance_boundary": "NON-NEGOTIABLE COMPLIANCE BOUNDARY (Server-Enforced): This system automates ADMINISTRATION ONLY. You must NEVER generate, imply, or simulate autonomous tax, accounting, legal, or other regulated professional advice. All outputs are factual extraction, status tracking, and summarization — never recommendations or judgments requiring a licensed professional. Every output must carry the mandatory disclaimer: \"This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.\""
+    "fixed_compliance_boundary": "NON-NEGOTIABLE COMPLIANCE BOUNDARY (Server-Enforced): This system automates ADMINISTRATION ONLY. You must NEVER generate, imply, or simulate autonomous tax, accounting, legal, or other regulated professional advice. All outputs are factual extraction, status tracking, and summarization — never recommendations or judgments requiring a licensed professional. Every output must carry the mandatory disclaimer: \"This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.\"",
+    "updated_at": "2026-09-18T18:35:45.356Z"
   },
   "staff_users": [
     {
@@ -274,9 +276,316 @@
       "role": "accountant",
       "receive_summaries": true,
       "receive_chase_alerts": false
+    },
+    {
+      "id": "staff_1789756519249",
+      "name": "Suleman Saeed",
+      "email": "sulemansaeed008@gmail.com",
+      "role": "admin",
+      "receive_summaries": true,
+      "receive_chase_alerts": true
     }
   ],
   "clients": [
+    {
+      "id": "CLI-1789833066597-Z2DS",
+      "company_name": "Marcus Vance",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "Awaiting Documents",
+      "contact": {
+        "name": "Marcus Vance",
+        "email": "marcus.vance@solarenergy.co.uk",
+        "phone": "+44 20 7946 0888"
+      },
+      "turnover_band": "£500k - £1m",
+      "employee_count": 8,
+      "relevant_date": "2025-12-31",
+      "existing_provider": "None",
+      "custom_fields": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 8,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact": {
+          "name": "Marcus Vance",
+          "email": "marcus.vance@solarenergy.co.uk",
+          "phone": "+44 20 7946 0888"
+        }
+      },
+      "custom_intake_data": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 8,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact": {
+          "name": "Marcus Vance",
+          "email": "marcus.vance@solarenergy.co.uk",
+          "phone": "+44 20 7946 0888"
+        }
+      },
+      "checklist_required": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "documents": [
+        {
+          "doc_id": "doc_1789833074666_6zf6",
+          "client_id": "CLI-1789833066597-Z2DS",
+          "filename": "bank_statement.txt",
+          "file_name": "bank_statement.txt",
+          "file_type": "text/plain",
+          "doc_type": "bank_statement",
+          "classified_type": "bank_statement",
+          "confidence": 0.98,
+          "confidence_score": 0.98,
+          "key_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:51:14.666Z"
+        }
+      ],
+      "upload_token": "tok_1789833066597_l9eoxphs",
+      "booking_unlocked": false,
+      "created_at": "2026-09-19T15:51:06.597Z",
+      "updated_at": "2026-09-19T15:51:14.668Z",
+      "metadata": {
+        "origin": "web_intake",
+        "ip": "::1"
+      }
+    },
+    {
+      "id": "CLI-1789833015401-BT6N",
+      "company_name": "Sarah Connor",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "Awaiting Documents",
+      "contact": {
+        "name": "Sarah Connor",
+        "email": "sarah.connor@skyline.co.uk",
+        "phone": "+44 20 7946 0999"
+      },
+      "turnover_band": "£500k - £1m",
+      "employee_count": 5,
+      "relevant_date": "2025-12-31",
+      "existing_provider": "None",
+      "custom_fields": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact": {
+          "name": "Sarah Connor",
+          "email": "sarah.connor@skyline.co.uk",
+          "phone": "+44 20 7946 0999"
+        }
+      },
+      "custom_intake_data": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact": {
+          "name": "Sarah Connor",
+          "email": "sarah.connor@skyline.co.uk",
+          "phone": "+44 20 7946 0999"
+        }
+      },
+      "checklist_required": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "missing_items": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "documents": [],
+      "upload_token": "tok_1789833015401_1md5f946",
+      "booking_unlocked": false,
+      "created_at": "2026-09-19T15:50:15.401Z",
+      "updated_at": "2026-09-19T15:50:15.401Z",
+      "metadata": {
+        "origin": "web_intake",
+        "ip": "::1"
+      }
+    },
+    {
+      "id": "sim_1789832650501_liuk",
+      "company_name": "Nexus Engineering Ltd",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "ready_for_review",
+      "contact": {
+        "name": "Eleanor Vance",
+        "email": "eleanor.vance@example.com",
+        "phone": "+44 20 7946 0991"
+      },
+      "custom_fields": {
+        "turnover_band": "£500k - £1.5M",
+        "payroll_employees": "12",
+        "accounting_software": "Xero",
+        "vat_registered": "Yes",
+        "companies_house_number": "08472910"
+      },
+      "missing_items": [],
+      "documents": [
+        {
+          "doc_id": "doc_sim_1",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "Barclays_Bank_Statement_2024.pdf",
+          "file_name": "Barclays_Bank_Statement_2024.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "bank_statement",
+          "confidence_score": 0.98,
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.506Z"
+        },
+        {
+          "doc_id": "doc_sim_2",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "Prior_Year_Financial_Accounts_2023.pdf",
+          "file_name": "Prior_Year_Financial_Accounts_2023.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "bank_statement",
+          "confidence_score": 0.98,
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.507Z"
+        },
+        {
+          "doc_id": "doc_sim_f_0",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "payroll_summary_nexus_verified.pdf",
+          "file_name": "payroll_summary_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "payroll_summary",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "payroll_summary",
+            "status": "complete",
+            "verified_at": "2026-09-19T15:44:10.510Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for payroll_summary",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.510Z"
+        },
+        {
+          "doc_id": "doc_sim_f_1",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "id_nexus_verified.pdf",
+          "file_name": "id_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "id",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "id",
+            "status": "complete",
+            "verified_at": "2026-09-19T15:44:10.511Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for id",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.511Z"
+        },
+        {
+          "doc_id": "doc_sim_f_2",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "proof_of_address_nexus_verified.pdf",
+          "file_name": "proof_of_address_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "proof_of_address",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "proof_of_address",
+            "status": "complete",
+            "verified_at": "2026-09-19T15:44:10.511Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for proof_of_address",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.511Z"
+        },
+        {
+          "doc_id": "doc_sim_f_3",
+          "client_id": "sim_1789832650501_liuk",
+          "filename": "vat_certificate_nexus_verified.pdf",
+          "file_name": "vat_certificate_nexus_verified.pdf",
+          "file_type": "application/pdf",
+          "classified_type": "vat_certificate",
+          "confidence_score": 0.96,
+          "extracted_fields": {
+            "doc_type": "vat_certificate",
+            "status": "complete",
+            "verified_at": "2026-09-19T15:44:10.512Z"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Standard administrative fulfillment for vat_certificate",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-19T15:44:10.512Z"
+        }
+      ],
+      "upload_token": "tok_sim_1789832650501_ma8qlhwl",
+      "created_at": "2026-09-19T15:44:10.501Z",
+      "updated_at": "2026-09-19T15:44:10.513Z",
+      "metadata": {
+        "origin": "1_click_simulator"
+      }
+    },
     {
       "id": "sim_1789756301043_bksy",
       "company_name": "Nexus Engineering Ltd",
@@ -419,7 +728,7 @@
   "documents": [
     {
       "doc_id": "doc_sim_1",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "Barclays_Bank_Statement_2024.pdf",
       "file_name": "Barclays_Bank_Statement_2024.pdf",
       "file_type": "application/pdf",
@@ -434,11 +743,11 @@
       "verification_status": "verified",
       "verification_notes": "High quality bank statement parsed.",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.048Z"
+      "uploaded_at": "2026-09-19T15:44:10.506Z"
     },
     {
       "doc_id": "doc_sim_2",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "Prior_Year_Financial_Accounts_2023.pdf",
       "file_name": "Prior_Year_Financial_Accounts_2023.pdf",
       "file_type": "application/pdf",
@@ -453,11 +762,11 @@
       "verification_status": "verified",
       "verification_notes": "High quality bank statement parsed.",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.050Z"
+      "uploaded_at": "2026-09-19T15:44:10.507Z"
     },
     {
       "doc_id": "doc_sim_f_0",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "payroll_summary_nexus_verified.pdf",
       "file_name": "payroll_summary_nexus_verified.pdf",
       "file_type": "application/pdf",
@@ -466,16 +775,16 @@
       "extracted_fields": {
         "doc_type": "payroll_summary",
         "status": "complete",
-        "verified_at": "2026-09-18T18:31:41.053Z"
+        "verified_at": "2026-09-19T15:44:10.510Z"
       },
       "verification_status": "verified",
       "verification_notes": "Standard administrative fulfillment for payroll_summary",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.053Z"
+      "uploaded_at": "2026-09-19T15:44:10.510Z"
     },
     {
       "doc_id": "doc_sim_f_1",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "id_nexus_verified.pdf",
       "file_name": "id_nexus_verified.pdf",
       "file_type": "application/pdf",
@@ -484,16 +793,16 @@
       "extracted_fields": {
         "doc_type": "id",
         "status": "complete",
-        "verified_at": "2026-09-18T18:31:41.054Z"
+        "verified_at": "2026-09-19T15:44:10.511Z"
       },
       "verification_status": "verified",
       "verification_notes": "Standard administrative fulfillment for id",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.054Z"
+      "uploaded_at": "2026-09-19T15:44:10.511Z"
     },
     {
       "doc_id": "doc_sim_f_2",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "proof_of_address_nexus_verified.pdf",
       "file_name": "proof_of_address_nexus_verified.pdf",
       "file_type": "application/pdf",
@@ -502,16 +811,16 @@
       "extracted_fields": {
         "doc_type": "proof_of_address",
         "status": "complete",
-        "verified_at": "2026-09-18T18:31:41.056Z"
+        "verified_at": "2026-09-19T15:44:10.511Z"
       },
       "verification_status": "verified",
       "verification_notes": "Standard administrative fulfillment for proof_of_address",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.056Z"
+      "uploaded_at": "2026-09-19T15:44:10.511Z"
     },
     {
       "doc_id": "doc_sim_f_3",
-      "client_id": "sim_1789756301043_bksy",
+      "client_id": "sim_1789832650501_liuk",
       "filename": "vat_certificate_nexus_verified.pdf",
       "file_name": "vat_certificate_nexus_verified.pdf",
       "file_type": "application/pdf",
@@ -520,15 +829,112 @@
       "extracted_fields": {
         "doc_type": "vat_certificate",
         "status": "complete",
-        "verified_at": "2026-09-18T18:31:41.057Z"
+        "verified_at": "2026-09-19T15:44:10.512Z"
       },
       "verification_status": "verified",
       "verification_notes": "Standard administrative fulfillment for vat_certificate",
       "flagged_for_review": false,
-      "uploaded_at": "2026-09-18T18:31:41.057Z"
+      "uploaded_at": "2026-09-19T15:44:10.512Z"
+    },
+    {
+      "doc_id": "doc_1789833074666_6zf6",
+      "client_id": "CLI-1789833066597-Z2DS",
+      "filename": "bank_statement.txt",
+      "file_name": "bank_statement.txt",
+      "file_type": "text/plain",
+      "doc_type": "bank_statement",
+      "classified_type": "bank_statement",
+      "confidence": 0.98,
+      "confidence_score": 0.98,
+      "key_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "extracted_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "verification_status": "verified",
+      "verification_notes": "High quality bank statement parsed.",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-19T15:51:14.666Z"
     }
   ],
   "reminders_sent": [
+    {
+      "id": "rem_1789833066599",
+      "client_id": "CLI-1789833066597-Z2DS",
+      "reminder_number": 1,
+      "missing_items": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "marcus.vance@solarenergy.co.uk",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-19T15:51:06.599Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789833015403",
+      "client_id": "CLI-1789833015401-BT6N",
+      "reminder_number": 1,
+      "missing_items": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "sarah.connor@skyline.co.uk",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-19T15:50:15.403Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789832650509",
+      "client_id": "sim_1789832650501_liuk",
+      "reminder_number": 1,
+      "missing_items": [
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "eleanor.vance@example.com",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - Nexus Engineering Ltd",
+      "sent_at": "2026-09-19T15:44:10.509Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789832650505",
+      "client_id": "sim_1789832650501_liuk",
+      "reminder_number": 1,
+      "missing_items": [
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate"
+      ],
+      "recipient_email": "eleanor.vance@example.com",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-19T15:44:10.505Z",
+      "channel": "email",
+      "status": "logged"
+    },
     {
       "id": "rem_1789756301053",
       "client_id": "sim_1789756301043_bksy",
@@ -585,6 +991,27 @@
       "flagged_items": [],
       "advice_disclaimer": "This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.",
       "generated_at": "2026-09-18T18:31:41.060Z"
+    },
+    {
+      "client_id": "sim_1789832650501_liuk",
+      "business_profile": "Eleanor Vance (Ltd), Turnover undefined, Headcount undefined",
+      "service_requested": "Year-end accounts",
+      "documents_received": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "key_figures_extracted": {},
+      "open_questions": [
+        "Confirm whether there have been any material changes in business activities or directors over the past 12 months",
+        "Verify primary commercial bank accounts and third-party payment gateways currently in operation"
+      ],
+      "flagged_items": [],
+      "advice_disclaimer": "This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.",
+      "generated_at": "2026-09-19T15:44:10.514Z"
     }
   ]
 }
