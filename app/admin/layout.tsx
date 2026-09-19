@@ -1,12 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Settings, Palette, Briefcase, Mail, Bot, Users, PlayCircle } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/components/AuthProvider";
+import { Settings, Palette, Briefcase, Mail, Bot, Users, PlayCircle, Lock, Loader2, ShieldCheck } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, loading } = useAuth();
 
   const navItems = [
     { href: "/admin", label: "Overview & Simulator", icon: PlayCircle, exact: true },
@@ -16,6 +19,42 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: "/admin/ai", label: "OpenAI Prompts", icon: Bot },
     { href: "/admin/staff", label: "Staff Team", icon: Users },
   ];
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push(`/login?redirect=${encodeURIComponent(pathname || "/admin")}`);
+    }
+  }, [user, loading, router, pathname]);
+
+  if (loading) {
+    return (
+      <div className="py-24 text-center space-y-3">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto text-brand-primary" />
+        <p className="text-xs text-brand-textSecondary font-semibold">Verifying administrative credentials...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="max-w-md mx-auto py-16 text-center space-y-4 bg-brand-surface border border-brand-border rounded-brand p-8 shadow-sm">
+        <div className="w-12 h-12 rounded-full bg-amber-100 text-amber-600 mx-auto flex items-center justify-center">
+          <Lock className="w-6 h-6" />
+        </div>
+        <h2 className="text-xl font-bold text-brand-textPrimary">Authentication Required</h2>
+        <p className="text-xs text-brand-textSecondary">
+          The Admin Control Center requires a valid staff or administrator session.
+        </p>
+        <Link
+          href={`/login?redirect=${encodeURIComponent(pathname || "/admin")}`}
+          className="inline-flex items-center justify-center px-6 py-2.5 rounded-brand text-xs font-bold text-white shadow"
+          style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
+        >
+          Sign In to Admin Panel
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -29,6 +68,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <p className="text-xs text-brand-textSecondary mt-1">
             Dynamic Runtime Governance — All client-facing features read live from this panel.
           </p>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-full font-medium">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <span>Authenticated as: <strong>{user.name}</strong> ({user.role})</span>
         </div>
       </div>
 
