@@ -618,6 +618,15 @@ export const db = {
     return doc;
   },
 
+  async deleteDocument(clientId: string, docType: string): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      await supabase.from("documents").delete().eq("client_id", clientId).eq("doc_type", docType);
+    }
+    const state = getLocalState();
+    state.documents = state.documents.filter(d => !(d.client_id === clientId && (d.doc_type === docType || d.classified_type === docType)));
+    saveLocalState(state);
+  },
+
   // Reminders Sent
   async getRemindersSent(clientId?: string): Promise<ReminderSentRecord[]> {
     if (isSupabaseConfigured && supabase) {
@@ -659,5 +668,14 @@ export const db = {
     state.staff_summaries = state.staff_summaries.filter(s => s.client_id !== summary.client_id).concat(summary);
     saveLocalState(state);
     return summary;
+  },
+
+  async deleteStaffSummary(clientId: string): Promise<void> {
+    if (isSupabaseConfigured && supabase) {
+      await supabase.from("staff_summaries").delete().eq("client_id", clientId);
+    }
+    const state = getLocalState();
+    state.staff_summaries = state.staff_summaries.filter(s => s.client_id !== clientId);
+    saveLocalState(state);
   }
 };

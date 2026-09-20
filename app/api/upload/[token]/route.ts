@@ -60,9 +60,48 @@ export async function POST(
 
     const contentType = req.headers.get("content-type") || "";
 
-    // Check for JSON action commands (e.g. synthetic test flows)
+    // Check for JSON action commands (e.g. synthetic test flows or document removal)
     if (contentType.includes("application/json")) {
       const json = await req.json().catch(() => ({}));
+
+      // =======================================================================
+      // ACTION: DELETE / CANCEL UPLOADED DOCUMENT
+      // =======================================================================
+      if (json.action === "delete_document" || json.action === "remove_document") {
+        const docType = json.doc_type || json.docType;
+        if (!docType) {
+          return NextResponse.json({ success: false, error: "doc_type is required" }, { status: 400 });
+        }
+
+        await db.deleteDocument(client.id, docType);
+
+        const currentMissing = client.missing_items || [];
+        const updatedMissing = currentMissing.includes(docType)
+          ? currentMissing
+          : [...currentMissing, docType];
+
+        await db.deleteStaffSummary(client.id);
+
+        const updatedClient = await db.updateClient(client.id, {
+          missing_items: updatedMissing,
+          status: "Awaiting Documents",
+          booking_unlocked: false
+        });
+
+        const allDocs = await db.getDocumentsByClientId(client.id);
+
+        return NextResponse.json({
+          success: true,
+          action: "delete_document",
+          message: `Document '${docType.replace(/_/g, " ")}' removed. Status changed back to missing.`,
+          removed_doc_type: docType,
+          missing_items: updatedMissing,
+          all_complete: false,
+          booking_unlocked: false,
+          client: updatedClient,
+          documents: allDocs
+        });
+      }
 
       // =======================================================================
       // ACTION: SYNTHETIC PARTIAL UPLOAD (Leave 1 Deliberately Missing)

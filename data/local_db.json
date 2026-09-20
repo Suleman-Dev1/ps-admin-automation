@@ -323,6 +323,322 @@
   ],
   "clients": [
     {
+      "id": "CLI-1789901547321-6102",
+      "company_name": "John David Smith",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "Ready",
+      "contact": {
+        "name": "John David Smith",
+        "email": "john.smith@apextrading.co.uk",
+        "phone": "+44 20 7946 0912"
+      },
+      "turnover_band": "£500k - £1m",
+      "employee_count": 5,
+      "relevant_date": "2025-12-31",
+      "existing_provider": "None",
+      "custom_fields": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "company_name": "John David Smith",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact_name": "John David Smith",
+        "contact_email": "john.smith@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "John David Smith",
+          "email": "john.smith@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        }
+      },
+      "custom_intake_data": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "company_name": "John David Smith",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact_name": "John David Smith",
+        "contact_email": "john.smith@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "John David Smith",
+          "email": "john.smith@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        }
+      },
+      "checklist_required": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "missing_items": [],
+      "documents": [
+        {
+          "doc_id": "doc_1789901558830_6p6y",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "bank_statement.txt",
+          "file_name": "bank_statement.txt",
+          "file_type": "text/plain",
+          "doc_type": "bank_statement",
+          "classified_type": "bank_statement",
+          "confidence": 0.98,
+          "confidence_score": 0.98,
+          "key_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:38.830Z"
+        },
+        {
+          "doc_id": "doc_1789901565645_0wi2",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "vat_certificate.txt",
+          "file_name": "vat_certificate.txt",
+          "file_type": "text/plain",
+          "doc_type": "vat_certificate",
+          "classified_type": "vat_certificate",
+          "confidence": 0.96,
+          "confidence_score": 0.96,
+          "key_fields": {
+            "vat_number": "GB 987 6543 21",
+            "return_frequency": "Quarterly"
+          },
+          "extracted_fields": {
+            "vat_number": "GB 987 6543 21",
+            "return_frequency": "Quarterly"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as vat_certificate (96% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:45.645Z"
+        },
+        {
+          "doc_id": "doc_1789901567675_sbbz",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "bank_statement.txt",
+          "file_name": "bank_statement.txt",
+          "file_type": "text/plain",
+          "doc_type": "bank_statement",
+          "classified_type": "bank_statement",
+          "confidence": 0.98,
+          "confidence_score": 0.98,
+          "key_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "extracted_fields": {
+            "bank_name": "Barclays Bank UK PLC",
+            "closing_balance": 42580.2,
+            "turnover": 620000,
+            "account_number": "20491823"
+          },
+          "verification_status": "verified",
+          "verification_notes": "High quality bank statement parsed.",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:47.675Z"
+        },
+        {
+          "doc_id": "doc_1789901568559_hcyi",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "prior_year_accounts.txt",
+          "file_name": "prior_year_accounts.txt",
+          "file_type": "text/plain",
+          "doc_type": "prior_year_accounts",
+          "classified_type": "prior_year_accounts",
+          "confidence": 0.95,
+          "confidence_score": 0.95,
+          "key_fields": {
+            "turnover": 580000,
+            "net_profit": 74200,
+            "balance_sheet_total": 116780.2
+          },
+          "extracted_fields": {
+            "turnover": 580000,
+            "net_profit": 74200,
+            "balance_sheet_total": 116780.2
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as prior_year_accounts (95% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:48.559Z"
+        },
+        {
+          "doc_id": "doc_1789901569481_ac54",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "payroll_summary.txt",
+          "file_name": "payroll_summary.txt",
+          "file_type": "text/plain",
+          "doc_type": "payroll_summary",
+          "classified_type": "payroll_summary",
+          "confidence": 0.94,
+          "confidence_score": 0.94,
+          "key_fields": {
+            "paye_reference": "120/AT89123",
+            "employee_count": 5,
+            "gross_pay": 18400,
+            "total_paye_nic_due": 4250
+          },
+          "extracted_fields": {
+            "paye_reference": "120/AT89123",
+            "employee_count": 5,
+            "gross_pay": 18400,
+            "total_paye_nic_due": 4250
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as payroll_summary (94% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:49.481Z"
+        },
+        {
+          "doc_id": "doc_1789901570275_x9pm",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "id.txt",
+          "file_name": "id.txt",
+          "file_type": "text/plain",
+          "doc_type": "id",
+          "classified_type": "id",
+          "confidence": 0.97,
+          "confidence_score": 0.97,
+          "key_fields": {
+            "full_name": "John David Smith",
+            "passport_number": "554981203",
+            "expiry_date": "2031-05-14"
+          },
+          "extracted_fields": {
+            "full_name": "John David Smith",
+            "passport_number": "554981203",
+            "expiry_date": "2031-05-14"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as id (97% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:50.275Z"
+        },
+        {
+          "doc_id": "doc_1789901571591_iomg",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "vat_certificate.txt",
+          "file_name": "vat_certificate.txt",
+          "file_type": "text/plain",
+          "doc_type": "vat_certificate",
+          "classified_type": "vat_certificate",
+          "confidence": 0.96,
+          "confidence_score": 0.96,
+          "key_fields": {
+            "vat_number": "GB 987 6543 21",
+            "return_frequency": "Quarterly"
+          },
+          "extracted_fields": {
+            "vat_number": "GB 987 6543 21",
+            "return_frequency": "Quarterly"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as vat_certificate (96% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:51.591Z"
+        },
+        {
+          "doc_id": "doc_1789901577224_5twy",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "proof_of_address.txt",
+          "file_name": "proof_of_address.txt",
+          "file_type": "text/plain",
+          "doc_type": "proof_of_address",
+          "classified_type": "proof_of_address",
+          "confidence": 0.98,
+          "confidence_score": 0.98,
+          "key_fields": {
+            "utility_provider": "British Gas Business",
+            "account_name": "Apex Trading Ltd",
+            "service_address": "Suite 4, High Street Business Park, London EC2A 4NE"
+          },
+          "extracted_fields": {
+            "utility_provider": "British Gas Business",
+            "account_name": "Apex Trading Ltd",
+            "service_address": "Suite 4, High Street Business Park, London EC2A 4NE"
+          },
+          "verification_status": "verified",
+          "verification_notes": "Classified as proof_of_address (98% confidence)",
+          "flagged_for_review": false,
+          "uploaded_at": "2026-09-20T10:52:57.224Z"
+        },
+        {
+          "doc_id": "doc_1789901599648_5344",
+          "client_id": "CLI-1789901547321-6102",
+          "filename": "cs-7a-first-key.pem",
+          "file_name": "cs-7a-first-key.pem",
+          "file_type": "application/x-x509-ca-cert",
+          "doc_type": "law",
+          "classified_type": "law",
+          "confidence": 0.7,
+          "confidence_score": 0.7,
+          "key_fields": {
+            "snippet": ""
+          },
+          "extracted_fields": {
+            "snippet": ""
+          },
+          "verification_status": "flagged",
+          "verification_notes": "Unclassified document type — human review advised.",
+          "flagged_for_review": true,
+          "uploaded_at": "2026-09-20T10:53:19.648Z"
+        }
+      ],
+      "upload_token": "tok_1789901547321_ld7oa1v9",
+      "booking_unlocked": true,
+      "created_at": "2026-09-20T10:52:27.321Z",
+      "updated_at": "2026-09-20T10:53:19.650Z",
+      "metadata": {
+        "origin": "web_intake",
+        "ip": "::1"
+      }
+    },
+    {
       "id": "CLI-1789892691434-3Z6G",
       "company_name": "John David Smith",
       "business_type": "Ltd",
@@ -1097,9 +1413,374 @@
       "verification_notes": "High quality bank statement parsed.",
       "flagged_for_review": false,
       "uploaded_at": "2026-09-19T15:51:14.666Z"
+    },
+    {
+      "doc_id": "doc_1789901558830_6p6y",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "bank_statement.txt",
+      "file_name": "bank_statement.txt",
+      "file_type": "text/plain",
+      "doc_type": "bank_statement",
+      "classified_type": "bank_statement",
+      "confidence": 0.98,
+      "confidence_score": 0.98,
+      "key_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "extracted_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "verification_status": "verified",
+      "verification_notes": "High quality bank statement parsed.",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:38.830Z"
+    },
+    {
+      "doc_id": "doc_1789901565645_0wi2",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "vat_certificate.txt",
+      "file_name": "vat_certificate.txt",
+      "file_type": "text/plain",
+      "doc_type": "vat_certificate",
+      "classified_type": "vat_certificate",
+      "confidence": 0.96,
+      "confidence_score": 0.96,
+      "key_fields": {
+        "vat_number": "GB 987 6543 21",
+        "return_frequency": "Quarterly"
+      },
+      "extracted_fields": {
+        "vat_number": "GB 987 6543 21",
+        "return_frequency": "Quarterly"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as vat_certificate (96% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:45.645Z"
+    },
+    {
+      "doc_id": "doc_1789901567675_sbbz",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "bank_statement.txt",
+      "file_name": "bank_statement.txt",
+      "file_type": "text/plain",
+      "doc_type": "bank_statement",
+      "classified_type": "bank_statement",
+      "confidence": 0.98,
+      "confidence_score": 0.98,
+      "key_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "extracted_fields": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 620000,
+        "account_number": "20491823"
+      },
+      "verification_status": "verified",
+      "verification_notes": "High quality bank statement parsed.",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:47.675Z"
+    },
+    {
+      "doc_id": "doc_1789901568559_hcyi",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "prior_year_accounts.txt",
+      "file_name": "prior_year_accounts.txt",
+      "file_type": "text/plain",
+      "doc_type": "prior_year_accounts",
+      "classified_type": "prior_year_accounts",
+      "confidence": 0.95,
+      "confidence_score": 0.95,
+      "key_fields": {
+        "turnover": 580000,
+        "net_profit": 74200,
+        "balance_sheet_total": 116780.2
+      },
+      "extracted_fields": {
+        "turnover": 580000,
+        "net_profit": 74200,
+        "balance_sheet_total": 116780.2
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as prior_year_accounts (95% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:48.559Z"
+    },
+    {
+      "doc_id": "doc_1789901569481_ac54",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "payroll_summary.txt",
+      "file_name": "payroll_summary.txt",
+      "file_type": "text/plain",
+      "doc_type": "payroll_summary",
+      "classified_type": "payroll_summary",
+      "confidence": 0.94,
+      "confidence_score": 0.94,
+      "key_fields": {
+        "paye_reference": "120/AT89123",
+        "employee_count": 5,
+        "gross_pay": 18400,
+        "total_paye_nic_due": 4250
+      },
+      "extracted_fields": {
+        "paye_reference": "120/AT89123",
+        "employee_count": 5,
+        "gross_pay": 18400,
+        "total_paye_nic_due": 4250
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as payroll_summary (94% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:49.481Z"
+    },
+    {
+      "doc_id": "doc_1789901570275_x9pm",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "id.txt",
+      "file_name": "id.txt",
+      "file_type": "text/plain",
+      "doc_type": "id",
+      "classified_type": "id",
+      "confidence": 0.97,
+      "confidence_score": 0.97,
+      "key_fields": {
+        "full_name": "John David Smith",
+        "passport_number": "554981203",
+        "expiry_date": "2031-05-14"
+      },
+      "extracted_fields": {
+        "full_name": "John David Smith",
+        "passport_number": "554981203",
+        "expiry_date": "2031-05-14"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as id (97% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:50.275Z"
+    },
+    {
+      "doc_id": "doc_1789901571591_iomg",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "vat_certificate.txt",
+      "file_name": "vat_certificate.txt",
+      "file_type": "text/plain",
+      "doc_type": "vat_certificate",
+      "classified_type": "vat_certificate",
+      "confidence": 0.96,
+      "confidence_score": 0.96,
+      "key_fields": {
+        "vat_number": "GB 987 6543 21",
+        "return_frequency": "Quarterly"
+      },
+      "extracted_fields": {
+        "vat_number": "GB 987 6543 21",
+        "return_frequency": "Quarterly"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as vat_certificate (96% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:51.591Z"
+    },
+    {
+      "doc_id": "doc_1789901577224_5twy",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "proof_of_address.txt",
+      "file_name": "proof_of_address.txt",
+      "file_type": "text/plain",
+      "doc_type": "proof_of_address",
+      "classified_type": "proof_of_address",
+      "confidence": 0.98,
+      "confidence_score": 0.98,
+      "key_fields": {
+        "utility_provider": "British Gas Business",
+        "account_name": "Apex Trading Ltd",
+        "service_address": "Suite 4, High Street Business Park, London EC2A 4NE"
+      },
+      "extracted_fields": {
+        "utility_provider": "British Gas Business",
+        "account_name": "Apex Trading Ltd",
+        "service_address": "Suite 4, High Street Business Park, London EC2A 4NE"
+      },
+      "verification_status": "verified",
+      "verification_notes": "Classified as proof_of_address (98% confidence)",
+      "flagged_for_review": false,
+      "uploaded_at": "2026-09-20T10:52:57.224Z"
+    },
+    {
+      "doc_id": "doc_1789901599648_5344",
+      "client_id": "CLI-1789901547321-6102",
+      "filename": "cs-7a-first-key.pem",
+      "file_name": "cs-7a-first-key.pem",
+      "file_type": "application/x-x509-ca-cert",
+      "doc_type": "law",
+      "classified_type": "law",
+      "confidence": 0.7,
+      "confidence_score": 0.7,
+      "key_fields": {
+        "snippet": ""
+      },
+      "extracted_fields": {
+        "snippet": ""
+      },
+      "verification_status": "flagged",
+      "verification_notes": "Unclassified document type — human review advised.",
+      "flagged_for_review": true,
+      "uploaded_at": "2026-09-20T10:53:19.648Z"
     }
   ],
   "reminders_sent": [
+    {
+      "id": "rem_1789901577230",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:57.230Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901571596",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:51.596Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901570280",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:50.280Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901569486",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "id",
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:49.486Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901568564",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:48.564Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901567680",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:47.680Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901565650",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:45.650Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901558835",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Friendly Reminder: Documents needed to complete your onboarding - John David Smith",
+      "sent_at": "2026-09-20T10:52:38.835Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789901547324",
+      "client_id": "CLI-1789901547321-6102",
+      "reminder_number": 1,
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-20T10:52:27.324Z",
+      "channel": "email",
+      "status": "logged"
+    },
     {
       "id": "rem_1789892691437",
       "client_id": "CLI-1789892691434-3Z6G",
@@ -1281,6 +1962,52 @@
       "flagged_items": [],
       "advice_disclaimer": "This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.",
       "generated_at": "2026-09-19T15:44:10.514Z"
+    },
+    {
+      "client_id": "CLI-1789901547321-6102",
+      "business_profile": "John David Smith (Ltd), Turnover £500k - £1m, Headcount 5",
+      "service_requested": "Year-end accounts",
+      "documents_received": [
+        "bank_statement",
+        "vat_certificate",
+        "bank_statement",
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "vat_certificate",
+        "proof_of_address",
+        "law"
+      ],
+      "key_figures_extracted": {
+        "bank_name": "Barclays Bank UK PLC",
+        "closing_balance": 42580.2,
+        "turnover": 580000,
+        "account_number": "20491823",
+        "vat_number": "GB 987 6543 21",
+        "return_frequency": "Quarterly",
+        "net_profit": 74200,
+        "balance_sheet_total": 116780.2,
+        "paye_reference": "120/AT89123",
+        "employee_count": 5,
+        "gross_pay": 18400,
+        "total_paye_nic_due": 4250,
+        "full_name": "John David Smith",
+        "passport_number": "554981203",
+        "expiry_date": "2031-05-14",
+        "utility_provider": "British Gas Business",
+        "account_name": "Apex Trading Ltd",
+        "service_address": "Suite 4, High Street Business Park, London EC2A 4NE",
+        "snippet": ""
+      },
+      "open_questions": [
+        "Confirm whether there have been any material changes in business activities or directors over the past 12 months",
+        "Verify primary commercial bank accounts and third-party payment gateways currently in operation"
+      ],
+      "flagged_items": [
+        "Document 'law' requires staff review (confidence: 0.7)"
+      ],
+      "advice_disclaimer": "This is an informational summary only. It does not constitute tax, accounting, legal, or other regulated professional advice.",
+      "generated_at": "2026-09-20T10:53:19.654Z"
     }
   ]
 }
