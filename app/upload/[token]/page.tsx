@@ -178,38 +178,14 @@ export default function TokenizedUploadPage() {
     }
   };
 
-  // Quick Single Synthetic Document Upload (Demo Tool)
-  const handleQuickSynthetic = async (type: string, content: string) => {
+  // Populate form with sample text (does NOT upload or verify automatically)
+  const handleFillSample = (type: string, content: string) => {
+    setSyntheticDocType(type);
+    setFileContent(content);
     setUploadError(null);
-    setUploading(true);
-    setUploadResult(null);
-    setDemoNotice(null);
-
-    const formData = new FormData();
-    formData.append("doc_type_hint", type);
-    formData.append("text_content", content);
-    formData.append("filename", `${type}.txt`);
-
-    try {
-      const res = await fetch(`/api/upload/${token}`, {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setUploadResult(data);
-        if (data.staff_summary) setStaffSummary(data.staff_summary);
-        setDemoNotice(`Synthetic document "${type.replace(/_/g, " ")}" ingested and verified.`);
-        fetchClientData();
-      } else {
-        setUploadError(data.error || "Synthetic upload failed");
-      }
-    } catch (err: any) {
-      setUploadError("Upload failed: " + err.message);
-    } finally {
-      setUploading(false);
-    }
+    setDemoNotice(
+      `Sample text for "${type.replace(/_/g, " ")}" has been pasted into the form below. Review it and click "Upload Document & Process with OpenAI" (or attach a real photo/file) to process.`
+    );
   };
 
   // Automated Test Step 1: Upload partial documents & deliberately leave 1 missing
@@ -856,72 +832,72 @@ export default function TokenizedUploadPage() {
                     </button>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 pt-2 border-t border-slate-200">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleQuickSynthetic(
-                          "bank_statement",
-                          "Barclays Bank Statement. Account: 20491823. Period: 2024-01-01 to 2024-12-31. Closing Balance: £42,580.20. Turnover: £620,000.00."
-                        )
-                      }
-                      disabled={uploading}
-                      className="px-2.5 py-1 bg-white border border-slate-300 text-[11px] rounded hover:bg-slate-100"
-                    >
-                      + Bank Statement
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleQuickSynthetic(
-                          "prior_year_accounts",
-                          "Apex Trading Ltd Accounts 2024. Turnover: £580,000. Net Profit: £74,200."
-                        )
-                      }
-                      disabled={uploading}
-                      className="px-2.5 py-1 bg-white border border-slate-300 text-[11px] rounded hover:bg-slate-100"
-                    >
-                      + Prior Accounts
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleQuickSynthetic(
-                          "payroll_summary",
-                          "P32 PAYE Summary. PAYE Ref: 120/AT89123. 5 Employees. Gross Pay: £18,400."
-                        )
-                      }
-                      disabled={uploading}
-                      className="px-2.5 py-1 bg-white border border-slate-300 text-[11px] rounded hover:bg-slate-100"
-                    >
-                      + Payroll Summary
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleQuickSynthetic(
-                          "id",
-                          "UK Passport. Surname: Smith. Given: John David. No: 554981203."
-                        )
-                      }
-                      disabled={uploading}
-                      className="px-2.5 py-1 bg-white border border-slate-300 text-[11px] rounded hover:bg-slate-100"
-                    >
-                      + Director ID
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        handleQuickSynthetic(
-                          "proof_of_address",
-                          "British Gas Commercial Utility Bill. Suite 4, High Street Business Park, London EC2A 4NE."
-                        )
-                      }
-                      disabled={uploading}
-                      className="px-2.5 py-1 bg-white border border-slate-300 text-[11px] rounded hover:bg-slate-100"
-                    >
-                      + Proof of Address
-                    </button>
+                  <div className="pt-2 border-t border-slate-200">
+                    <div className="text-[11px] font-bold text-slate-600 mb-2">
+                      Click to paste sample text into the upload form below (does not upload automatically):
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleFillSample(
+                            "bank_statement",
+                            "Barclays Bank Statement. Account: 20491823. Period: 2024-01-01 to 2024-12-31. Closing Balance: £42,580.20. Turnover: £620,000.00."
+                          )
+                        }
+                        className="px-2.5 py-1.5 bg-white border border-slate-300 text-slate-700 text-[11px] font-medium rounded-lg hover:bg-slate-100 transition shadow-2xs"
+                      >
+                        📝 Paste Sample Bank Statement
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleFillSample(
+                            "prior_year_accounts",
+                            "Apex Trading Ltd Accounts 2024. Turnover: £580,000. Net Profit: £74,200."
+                          )
+                        }
+                        className="px-2.5 py-1.5 bg-white border border-slate-300 text-slate-700 text-[11px] font-medium rounded-lg hover:bg-slate-100 transition shadow-2xs"
+                      >
+                        📝 Paste Sample Accounts
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleFillSample(
+                            "payroll_summary",
+                            "P32 PAYE Summary. PAYE Ref: 120/AT89123. 5 Employees. Gross Pay: £18,400."
+                          )
+                        }
+                        className="px-2.5 py-1.5 bg-white border border-slate-300 text-slate-700 text-[11px] font-medium rounded-lg hover:bg-slate-100 transition shadow-2xs"
+                      >
+                        📝 Paste Sample Payroll
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleFillSample(
+                            "id",
+                            "UK Passport. Surname: Smith. Given: John David. No: 554981203."
+                          )
+                        }
+                        className="px-2.5 py-1.5 bg-white border border-slate-300 text-slate-700 text-[11px] font-medium rounded-lg hover:bg-slate-100 transition shadow-2xs"
+                      >
+                        📝 Paste Sample ID
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleFillSample(
+                            "proof_of_address",
+                            "British Gas Commercial Utility Bill. Suite 4, High Street Business Park, London EC2A 4NE."
+                          )
+                        }
+                        className="px-2.5 py-1.5 bg-white border border-slate-300 text-slate-700 text-[11px] font-medium rounded-lg hover:bg-slate-100 transition shadow-2xs"
+                      >
+                        📝 Paste Sample Proof of Address
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
