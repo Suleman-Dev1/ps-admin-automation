@@ -49,42 +49,49 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Navigation */}
+        {/* Navigation - Role Aware */}
         <nav className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href="/admin"
-            className={`px-3 py-1.5 text-sm font-medium rounded-brand transition flex items-center gap-1.5 ${
-              isCurrent("/admin")
-                ? "bg-brand-primary text-white shadow-sm"
-                : "text-brand-textSecondary hover:text-brand-textPrimary hover:bg-slate-100"
-            }`}
-          >
-            <Settings className="w-4 h-4" />
-            <span>Admin Panel</span>
-          </Link>
+          {/* Admin Panel: Only for logged-in Administrators */}
+          {user?.role === "admin" && (
+            <Link
+              href="/admin"
+              className={`px-3 py-1.5 text-xs font-bold rounded-brand transition flex items-center gap-1.5 ${
+                isCurrent("/admin")
+                  ? "bg-brand-primary text-white shadow-sm"
+                  : "text-brand-textSecondary hover:text-brand-textPrimary hover:bg-slate-100"
+              }`}
+            >
+              <Settings className="w-3.5 h-3.5" />
+              <span>Admin Panel</span>
+            </Link>
+          )}
 
+          {/* Staff CRM: For Staff (Accountants, Associates) and Admins */}
+          {(user?.role === "admin" || user?.role === "accountant" || user?.role === "associate") && (
+            <Link
+              href="/staff"
+              className={`px-3 py-1.5 text-xs font-bold rounded-brand transition flex items-center gap-1.5 ${
+                isCurrent("/staff")
+                  ? "bg-brand-primary text-white shadow-sm"
+                  : "text-brand-textSecondary hover:text-brand-textPrimary hover:bg-slate-100"
+              }`}
+            >
+              <Users className="w-3.5 h-3.5" />
+              <span>Staff CRM</span>
+            </Link>
+          )}
+
+          {/* Client Intake: Always accessible to submit / test intake */}
           <Link
             href="/intake"
-            className={`px-3 py-1.5 text-sm font-medium rounded-brand transition flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-bold rounded-brand transition flex items-center gap-1.5 ${
               isCurrent("/intake")
                 ? "bg-brand-primary text-white shadow-sm"
                 : "text-brand-textSecondary hover:text-brand-textPrimary hover:bg-slate-100"
             }`}
           >
-            <FileText className="w-4 h-4" />
+            <FileText className="w-3.5 h-3.5" />
             <span>Client Intake</span>
-          </Link>
-
-          <Link
-            href="/staff"
-            className={`px-3 py-1.5 text-sm font-medium rounded-brand transition flex items-center gap-1.5 ${
-              isCurrent("/staff")
-                ? "bg-brand-primary text-white shadow-sm"
-                : "text-brand-textSecondary hover:text-brand-textPrimary hover:bg-slate-100"
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            <span>Staff CRM</span>
           </Link>
 
           {/* User Auth Status Pill */}
