@@ -19,14 +19,17 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col bg-slate-100/75 text-slate-900 antialiased">
         <AuthProvider>
           <ThemeProvider initialTheme={initialTheme}>
             <Navbar />
-            <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              {children}
+            <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6">
+              {/* Main Application Frame Container */}
+              <div className="bg-white border border-slate-200/90 rounded-2xl shadow-sm p-5 sm:p-8 min-h-[calc(100vh-175px)]">
+                {children}
+              </div>
             </main>
-            <footer className="bg-brand-surface border-t border-brand-border py-6 text-center text-xs text-brand-textSecondary">
+            <footer className="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
               <p>
                 &copy; {new Date().getFullYear()} {initialTheme.firm_name} — Professional Services Admin Automation Platform
               </p>

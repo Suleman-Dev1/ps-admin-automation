@@ -3,7 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { BusinessType, Service, ChecklistConfig } from "@/lib/types";
 import { useTheme } from "@/components/ThemeProvider";
-import { FileText, CheckCircle2, ArrowRight, Loader2, Sparkles, AlertCircle } from "lucide-react";
+import { 
+  FileText, 
+  CheckCircle2, 
+  ArrowRight, 
+  Loader2, 
+  Sparkles, 
+  AlertCircle, 
+  Building, 
+  ShieldCheck, 
+  HelpCircle, 
+  Clock, 
+  FileCheck 
+} from "lucide-react";
 import Link from "next/link";
 
 export default function DynamicIntakePage() {
@@ -144,7 +156,6 @@ export default function DynamicIntakePage() {
       } else {
         const errText = data.error || "Submission could not be completed. Please check your inputs.";
         setErrorMessage(errText);
-        window.scrollTo({ top: 150, behavior: "smooth" });
       }
     } catch (err: any) {
       setErrorMessage("Network error: " + err.message);
@@ -161,251 +172,332 @@ export default function DynamicIntakePage() {
   } : null);
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-extrabold text-brand-textPrimary">
-          Client Onboarding & Intake
-        </h1>
-        <p className="text-sm text-brand-textSecondary max-w-lg mx-auto">
-          Welcome to {theme.firm_name}. Please specify your entity structure and service to generate your tailored onboarding checklist.
-        </p>
+    <div className="space-y-6">
+      {/* Top Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 mb-1">
+            <Building className="w-3.5 h-3.5" /> Client Onboarding Portal
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Client Intake & Dynamic Checklist
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            Welcome to {theme.firm_name}. Complete this form to generate your customized onboarding requirements.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-xs bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-xl text-slate-600">
+          <Clock className="w-4 h-4 text-blue-600 shrink-0" />
+          <span>Estimated time: <strong>2 minutes</strong></span>
+        </div>
       </div>
 
-      {/* Dynamic Intake Card */}
-      <div className="bg-brand-surface border border-brand-border rounded-brand p-8 shadow-sm">
-        {errorMessage && (
-          <div className="mb-6 p-4 rounded-brand bg-red-50 border border-red-200 text-red-800 text-sm flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold">Required Information Missing</p>
-              <p className="text-xs text-red-700 mt-0.5">{errorMessage}</p>
+      {submissionResult ? (
+        /* Success Framed Card */
+        <div className="bg-white border border-emerald-200 rounded-2xl p-8 text-center space-y-6 shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center shadow-xs">
+            <CheckCircle2 className="w-8 h-8" />
+          </div>
+          <div className="space-y-2 max-w-xl mx-auto">
+            <h2 className="text-2xl font-bold text-slate-900">Intake Record Created Successfully!</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Your profile has been registered, synced with our CRM, and your tailored onboarding checklist has been dynamically provisioned.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-left">
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">Client Reference ID</div>
+              <div className="font-mono text-sm font-bold text-slate-900 mt-1">{clientData?.id}</div>
+            </div>
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">CRM Sync Status</div>
+              <div className="text-sm font-bold text-blue-700 mt-1 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                <span>Connected</span>
+              </div>
+            </div>
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">Lifecycle Status</div>
+              <div className="text-sm font-bold text-amber-700 mt-1">Awaiting Documents</div>
             </div>
           </div>
-        )}
 
-        {submissionResult ? (
-          <div className="space-y-6 text-center py-4">
-            <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
-              <CheckCircle2 className="w-8 h-8" />
+          <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl max-w-2xl mx-auto text-left">
+            <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+              Required Documents Checklist ({clientData?.checklist_required?.length || 0} items)
             </div>
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-slate-900">Intake Record Created Successfully!</h2>
-              <p className="text-sm text-slate-600">
-                A CRM record has been provisioned and your customized checklist has been dynamically assigned.
-              </p>
+            <div className="flex flex-wrap gap-2">
+              {(clientData?.checklist_required || []).map((doc: string) => (
+                <span key={doc} className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-xs font-mono font-medium text-slate-800 capitalize">
+                  {doc.replace(/_/g, " ")}
+                </span>
+              ))}
             </div>
+          </div>
 
-            <div className="p-4 bg-slate-50 border border-slate-200 rounded-brand max-w-md mx-auto text-left text-xs space-y-2">
-              <div>
-                <strong>Client Reference ID:</strong> <code className="font-mono">{clientData?.id}</code>
-              </div>
-              <div>
-                <strong>CRM Sync Status:</strong>{" "}
-                <span className="capitalize font-semibold text-blue-700">
-                  {submissionResult.crm_status?.provider || "Connected"} (Record: {submissionResult.crm_status?.recordId || clientData?.id})
-                </span>
-              </div>
-              <div>
-                <strong>Initial Lifecycle Status:</strong>{" "}
-                <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold">
-                  {clientData?.status || "Awaiting Documents"}
-                </span>
-              </div>
-              <div>
-                <strong>Required Checklist ({clientData?.checklist_required?.length || 0} items):</strong>
-                <div className="flex flex-wrap gap-1 mt-1">
-                  {(clientData?.checklist_required || []).map((doc: string) => (
-                    <span key={doc} className="px-2 py-0.5 rounded bg-slate-200 text-slate-800 font-mono text-[11px]">
-                      {doc}
-                    </span>
-                  ))}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              href={`/upload/${clientData?.upload_token}`}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl text-white font-bold text-sm shadow flex items-center justify-center gap-2 transition"
+              style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
+            >
+              <span>Proceed to Tokenized Upload Portal</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+
+            <Link
+              href={`/staff/clients/${clientData?.id}`}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition"
+            >
+              View in Staff CRM
+            </Link>
+          </div>
+        </div>
+      ) : (
+        /* Framed 2-Column Responsive Workspace */
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Left Column: Context, Steps & Dynamic Checklist Preview */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Step Progress Tracker */}
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                Onboarding Steps
+              </h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                    1
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900">Entity & Service Selection</div>
+                    <p className="text-[11px] text-slate-500">Specify your business structure to tailor checklist</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">
+                    2
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-700">Financial & Contact Details</div>
+                    <p className="text-[11px] text-slate-500">Provide company profile and director contact</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center shrink-0">
+                    3
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-700">Tokenized Document Upload</div>
+                    <p className="text-[11px] text-slate-500">Submit files with automated OpenAI verification</p>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                href={`/upload/${clientData?.upload_token}`}
-                className="w-full sm:w-auto px-6 py-3 rounded-brand text-white font-bold text-sm shadow flex items-center justify-center gap-2"
-                style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
-              >
-                <span>Proceed to Tokenized Upload Portal</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              <Link
-                href={`/staff/clients/${clientData?.id}`}
-                className="w-full sm:w-auto px-6 py-3 rounded-brand bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition"
-              >
-                View in Staff CRM
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Step 1: Legal Entity & Service Selectors */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 border-b border-brand-border">
-              <div>
-                <label className="block text-xs font-bold uppercase text-brand-textPrimary mb-1.5">
-                  1. Legal Business Structure *
-                </label>
-                <select
-                  value={selectedType}
-                  onChange={(e) => setSelectedType(e.target.value)}
-                  required
-                  className="w-full px-3.5 py-2.5 text-sm rounded-brand border border-brand-border bg-white text-brand-textPrimary"
-                >
-                  {businessTypes.map((b) => (
-                    <option key={b.id} value={b.name}>
-                      {b.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold uppercase text-brand-textPrimary mb-1.5">
-                  2. Service Requested *
-                </label>
-                <select
-                  value={selectedService}
-                  onChange={(e) => setSelectedService(e.target.value)}
-                  required
-                  className="w-full px-3.5 py-2.5 text-sm rounded-brand border border-brand-border bg-white text-brand-textPrimary"
-                >
-                  {services.map((s) => (
-                    <option key={s.id} value={s.name}>
-                      {s.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {/* Checklist Preview Box */}
+            {/* Dynamic Checklist Preview Box */}
             {activeConfig && (
-              <div className="p-4 rounded-brand bg-blue-50/60 border border-blue-200 text-xs">
-                <div className="font-bold text-blue-900 mb-1 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Dynamically Provisioned Checklist for {selectedType} &rarr; {selectedService}:</span>
+              <div className="bg-blue-50/70 border border-blue-200 rounded-2xl p-5 space-y-3">
+                <div className="font-bold text-xs text-blue-950 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-blue-600" />
+                  <span>Required Documents Checklist Preview</span>
                 </div>
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                  {activeConfig.required_documents.map((doc) => (
-                    <span key={doc} className="px-2.5 py-1 rounded bg-white border border-blue-200 font-mono text-blue-950 font-medium">
-                      {doc}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Contact Information */}
-            <div className="space-y-4 pt-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-brand-textSecondary">
-                Contact Details
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-brand-textPrimary mb-1">Full Name *</label>
-                  <input
-                    type="text"
-                    value={contactName}
-                    onChange={(e) => {
-                      setContactName(e.target.value);
-                      if (errorMessage) setErrorMessage(null);
-                    }}
-                    required
-                    className="w-full px-3 py-2 text-sm rounded border border-brand-border bg-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-brand-textPrimary mb-1">Email Address *</label>
-                  <input
-                    type="email"
-                    value={contactEmail}
-                    onChange={(e) => {
-                      setContactEmail(e.target.value);
-                      if (errorMessage) setErrorMessage(null);
-                    }}
-                    required
-                    className="w-full px-3 py-2 text-sm rounded border border-brand-border bg-white"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-brand-textPrimary mb-1">Phone Number *</label>
-                  <input
-                    type="tel"
-                    value={contactPhone}
-                    onChange={(e) => {
-                      setContactPhone(e.target.value);
-                      if (errorMessage) setErrorMessage(null);
-                    }}
-                    required
-                    className="w-full px-3 py-2 text-sm rounded border border-brand-border bg-white"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Step 3: Dynamic Form Questions (Fetched from Admin checklist_config) */}
-            {activeConfig && activeConfig.required_fields && activeConfig.required_fields.length > 0 && (
-              <div className="space-y-4 pt-4 border-t border-brand-border">
-                <div className="text-xs font-bold uppercase tracking-wider text-brand-textSecondary">
-                  Entity & Financial Details (Dynamic Schema)
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {activeConfig.required_fields.map((field) => (
-                    <div key={field.field_id}>
-                      <label className="block text-xs font-medium text-brand-textPrimary mb-1">
-                        {field.label} {field.required ? "*" : ""}
-                      </label>
-
-                      {field.field_type === "select" ? (
-                        <select
-                          value={dynamicFormValues[field.field_id] || (field.options?.[0] || "")}
-                          onChange={(e) => handleDynamicChange(field.field_id, e.target.value)}
-                          required={field.required}
-                          className="w-full px-3 py-2 text-sm rounded border border-brand-border bg-white"
-                        >
-                          {(field.options || []).map((opt) => (
-                            <option key={opt} value={opt}>
-                              {opt}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input
-                          type={field.field_type === "number" ? "number" : field.field_type === "date" ? "date" : "text"}
-                          value={dynamicFormValues[field.field_id] ?? ""}
-                          onChange={(e) => handleDynamicChange(field.field_id, e.target.value)}
-                          required={field.required}
-                          placeholder={field.placeholder || ""}
-                          min={field.min}
-                          className="w-full px-3 py-2 text-sm rounded border border-brand-border bg-white"
-                        />
-                      )}
+                <p className="text-xs text-blue-900">
+                  Based on selecting <strong>{selectedType}</strong> for <strong>{selectedService}</strong>, the following {activeConfig.required_documents?.length || 0} documents will be requested:
+                </p>
+                <div className="space-y-2 pt-1">
+                  {(activeConfig.required_documents || []).map((doc) => (
+                    <div key={doc} className="flex items-center gap-2 text-xs bg-white border border-blue-200 rounded-lg px-3 py-1.5 text-blue-950 font-medium capitalize">
+                      <FileCheck className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                      <span>{doc.replace(/_/g, " ")}</span>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Submit Button */}
-            <div className="pt-6 border-t border-brand-border">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="w-full py-3.5 rounded-brand font-bold text-white text-base shadow flex items-center justify-center gap-2 transition disabled:opacity-50"
-                style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
-              >
-                {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
-                <span>{submitting ? "Processing Administrative Intake..." : "Submit Client Intake & Generate Checklist"}</span>
-              </button>
+            {/* Compliance Guarantee */}
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-3">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <div>
+                <strong className="text-slate-800">Administrative Automation Only:</strong>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  This portal handles factual intake collation only. No regulated tax, accounting, or legal advice is given.
+                </p>
+              </div>
             </div>
-          </form>
-        )}
-      </div>
+
+          </div>
+
+          {/* Right Column: Interactive Form */}
+          <div className="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
+            {errorMessage && (
+              <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold">Required Information Incomplete</p>
+                  <p className="text-red-700 mt-0.5">{errorMessage}</p>
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Section 1: Entity & Service */}
+              <div className="space-y-4">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Step 1: Entity & Engagement
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Legal Business Structure *
+                    </label>
+                    <select
+                      value={selectedType}
+                      onChange={(e) => setSelectedType(e.target.value)}
+                      required
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                    >
+                      {businessTypes.map((b) => (
+                        <option key={b.id} value={b.name}>
+                          {b.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Service Requested *
+                    </label>
+                    <select
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                      required
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                    >
+                      {services.map((s) => (
+                        <option key={s.id} value={s.name}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: Contact Information */}
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                  Step 2: Primary Contact
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
+                    <input
+                      type="text"
+                      value={contactName}
+                      onChange={(e) => {
+                        setContactName(e.target.value);
+                        if (errorMessage) setErrorMessage(null);
+                      }}
+                      required
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Email Address *</label>
+                    <input
+                      type="email"
+                      value={contactEmail}
+                      onChange={(e) => {
+                        setContactEmail(e.target.value);
+                        if (errorMessage) setErrorMessage(null);
+                      }}
+                      required
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
+                    <input
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => {
+                        setContactPhone(e.target.value);
+                        if (errorMessage) setErrorMessage(null);
+                      }}
+                      required
+                      className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Dynamic Form Questions */}
+              {activeConfig && activeConfig.required_fields && activeConfig.required_fields.length > 0 && (
+                <div className="space-y-4 pt-4 border-t border-slate-100">
+                  <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Step 3: Entity & Financial Schema Details
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {activeConfig.required_fields.map((field) => (
+                      <div key={field.field_id}>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          {field.label} {field.required ? "*" : ""}
+                        </label>
+
+                        {field.field_type === "select" ? (
+                          <select
+                            value={dynamicFormValues[field.field_id] || (field.options?.[0] || "")}
+                            onChange={(e) => handleDynamicChange(field.field_id, e.target.value)}
+                            required={field.required}
+                            className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                          >
+                            {(field.options || []).map((opt) => (
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <input
+                            type={field.field_type === "number" ? "number" : field.field_type === "date" ? "date" : "text"}
+                            value={dynamicFormValues[field.field_id] ?? ""}
+                            onChange={(e) => handleDynamicChange(field.field_id, e.target.value)}
+                            required={field.required}
+                            placeholder={field.placeholder || ""}
+                            min={field.min}
+                            className="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:ring-2 focus:ring-blue-500 transition"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Submit Action */}
+              <div className="pt-6 border-t border-slate-100">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-md flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none"
+                  style={{ backgroundColor: "var(--brand-primary, #1e3a8a)" }}
+                >
+                  {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
+                  <span>{submitting ? "Processing Administrative Intake..." : "Submit Client Intake & Generate Checklist"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 }

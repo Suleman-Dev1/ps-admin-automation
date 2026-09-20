@@ -66,57 +66,6 @@
   ],
   "checklist_config": [
     {
-      "id": "cfg_ltd_year_end",
-      "business_type_id": "bt_ltd",
-      "service_id": "srv_year_end",
-      "business_type_name": "Ltd",
-      "service_name": "Year-end accounts",
-      "required_documents": [
-        "bank_statement",
-        "prior_year_accounts",
-        "payroll_summary",
-        "id",
-        "proof_of_address",
-        "vat_certificate"
-      ],
-      "required_fields": [
-        {
-          "field_id": "turnover_band",
-          "label": "Annual Turnover Band",
-          "field_type": "select",
-          "options": [
-            "Under £100k",
-            "£100k - £250k",
-            "£250k - £500k",
-            "£500k - £1m",
-            "£1m - £5m",
-            "£5m+"
-          ],
-          "required": true
-        },
-        {
-          "field_id": "employee_count",
-          "label": "Number of Employees",
-          "field_type": "number",
-          "required": true,
-          "min": 0
-        },
-        {
-          "field_id": "relevant_date",
-          "label": "Financial Year-End Date",
-          "field_type": "date",
-          "required": false
-        },
-        {
-          "field_id": "existing_provider",
-          "label": "Previous Accountant",
-          "field_type": "text",
-          "required": false,
-          "placeholder": "e.g. Previous Firm Ltd or None"
-        }
-      ]
-    },
-    {
       "id": "cfg_sole_trader_self_assessment",
       "business_type_id": "bt_sole_trader",
       "service_id": "srv_self_assessment",
@@ -176,6 +125,58 @@
           "required": true
         }
       ]
+    },
+    {
+      "id": "cfg_ltd_year_end",
+      "business_type_id": "bt_ltd",
+      "service_id": "srv_year_end",
+      "business_type_name": "Ltd",
+      "service_name": "Year-end accounts",
+      "required_documents": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "required_fields": [
+        {
+          "field_id": "turnover_band",
+          "label": "Annual Turnover Band",
+          "field_type": "select",
+          "options": [
+            "Under £100k",
+            "£100k - £250k",
+            "£250k - £500k",
+            "£500k - £1m",
+            "£1m - £5m",
+            "£5m+"
+          ],
+          "required": true
+        },
+        {
+          "field_id": "employee_count",
+          "label": "Number of Employees",
+          "field_type": "number",
+          "required": true,
+          "min": 0
+        },
+        {
+          "field_id": "relevant_date",
+          "label": "Financial Year-End Date",
+          "field_type": "date",
+          "required": false
+        },
+        {
+          "field_id": "existing_provider",
+          "label": "Previous Accountant",
+          "field_type": "text",
+          "required": false,
+          "placeholder": "e.g. Previous Firm Ltd or None"
+        }
+      ],
+      "updated_at": "2026-09-20T08:16:05.292Z"
     }
   ],
   "email_templates": [
@@ -226,7 +227,7 @@
     "tiers": [
       {
         "tier": 1,
-        "days_elapsed": 2,
+        "days_elapsed": 4,
         "tone": "polite",
         "subject": "Friendly Reminder: Documents needed to complete your onboarding - {{client_name}}",
         "headline": "Onboarding Check-In",
@@ -249,7 +250,7 @@
         "body_text": "This is our final notification regarding outstanding documentation for your {{service}}. If missing items ({{missing_items}}) are not uploaded within 48 hours, your onboarding file will be closed."
       }
     ],
-    "updated_at": "2026-09-18T18:36:08.689Z"
+    "updated_at": "2026-09-20T08:17:55.657Z"
   },
   "ai_prompt_settings": {
     "id": "default_ai_settings",
@@ -284,9 +285,243 @@
       "role": "admin",
       "receive_summaries": true,
       "receive_chase_alerts": true
+    },
+    {
+      "id": "staff_1789834777652",
+      "name": "Suleman Saeed",
+      "email": "sulemansaeed008@gmail.com",
+      "role": "accountant",
+      "receive_summaries": true,
+      "receive_chase_alerts": false,
+      "created_at": "2026-09-19T16:19:37.652Z"
+    },
+    {
+      "id": "staff_1789892343459",
+      "name": "david",
+      "email": "david@firm.com",
+      "role": "auditor",
+      "receive_summaries": true,
+      "receive_chase_alerts": true
+    },
+    {
+      "id": "staff_1789892447389",
+      "name": "Usman Ali",
+      "email": "usmanali@firm.com",
+      "role": "accountant",
+      "receive_summaries": true,
+      "receive_chase_alerts": true
+    },
+    {
+      "id": "staff_1789893347529",
+      "name": "Usman Ali",
+      "email": "usmanaj0034@gmail.com",
+      "role": "accountant",
+      "receive_summaries": true,
+      "receive_chase_alerts": false,
+      "created_at": "2026-09-20T08:35:47.529Z"
     }
   ],
   "clients": [
+    {
+      "id": "CLI-1789892691434-3Z6G",
+      "company_name": "John David Smith",
+      "business_type": "Ltd",
+      "service_requested": "Year-end accounts",
+      "status": "Awaiting Documents",
+      "contact": {
+        "name": "John David Smith",
+        "email": "john.smith@apextrading.co.uk",
+        "phone": "+44 20 7946 0912"
+      },
+      "turnover_band": "£500k - £1m",
+      "employee_count": 5,
+      "relevant_date": "2025-12-31",
+      "existing_provider": "None",
+      "custom_fields": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "company_name": "John David Smith",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact_name": "John David Smith",
+        "contact_email": "john.smith@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "John David Smith",
+          "email": "john.smith@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        }
+      },
+      "custom_intake_data": {
+        "turnover_band": "£500k - £1m",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "company_name": "John David Smith",
+        "business_type": "Ltd",
+        "service_requested": "Year-end accounts",
+        "contact_name": "John David Smith",
+        "contact_email": "john.smith@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "John David Smith",
+          "email": "john.smith@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£500k - £1m",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None"
+        }
+      },
+      "checklist_required": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "documents": [],
+      "upload_token": "tok_1789892691434_lntdc7q9",
+      "booking_unlocked": false,
+      "created_at": "2026-09-20T08:24:51.434Z",
+      "updated_at": "2026-09-20T08:24:51.434Z",
+      "metadata": {
+        "origin": "web_intake",
+        "ip": "::1"
+      }
+    },
+    {
+      "id": "CLI-1789892665276-AFU4",
+      "company_name": "usman",
+      "business_type": "Partnership",
+      "service_requested": "Payroll",
+      "status": "Awaiting Documents",
+      "contact": {
+        "name": "usman",
+        "email": "usman.ali@apextrading.co.uk",
+        "phone": "+44 20 7946 0912"
+      },
+      "turnover_band": "£100k - £250k",
+      "employee_count": 5,
+      "relevant_date": "2025-12-31",
+      "existing_provider": "None",
+      "custom_fields": {
+        "turnover_band": "£100k - £250k",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "utr_number": "10",
+        "company_name": "usman",
+        "business_type": "Partnership",
+        "service_requested": "Payroll",
+        "contact_name": "usman",
+        "contact_email": "usman.ali@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "usman",
+          "email": "usman.ali@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£100k - £250k",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None",
+          "utr_number": "10"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£100k - £250k",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None",
+          "utr_number": "10"
+        }
+      },
+      "custom_intake_data": {
+        "turnover_band": "£100k - £250k",
+        "employee_count": 5,
+        "relevant_date": "2025-12-31",
+        "existing_provider": "None",
+        "utr_number": "10",
+        "company_name": "usman",
+        "business_type": "Partnership",
+        "service_requested": "Payroll",
+        "contact_name": "usman",
+        "contact_email": "usman.ali@apextrading.co.uk",
+        "contact_phone": "+44 20 7946 0912",
+        "contact": {
+          "name": "usman",
+          "email": "usman.ali@apextrading.co.uk",
+          "phone": "+44 20 7946 0912"
+        },
+        "custom_fields": {
+          "turnover_band": "£100k - £250k",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None",
+          "utr_number": "10"
+        },
+        "custom_intake_data": {
+          "turnover_band": "£100k - £250k",
+          "employee_count": 5,
+          "relevant_date": "2025-12-31",
+          "existing_provider": "None",
+          "utr_number": "10"
+        }
+      },
+      "checklist_required": [
+        "bank_statement",
+        "id",
+        "proof_of_address",
+        "expense_records"
+      ],
+      "missing_items": [
+        "bank_statement",
+        "id",
+        "proof_of_address",
+        "expense_records"
+      ],
+      "documents": [],
+      "upload_token": "tok_1789892665276_2hhwrjqn",
+      "booking_unlocked": false,
+      "created_at": "2026-09-20T08:24:25.276Z",
+      "updated_at": "2026-09-20T08:24:25.276Z",
+      "metadata": {
+        "origin": "web_intake",
+        "ip": "::1"
+      }
+    },
     {
       "id": "CLI-1789833066597-Z2DS",
       "company_name": "Marcus Vance",
@@ -865,6 +1100,40 @@
     }
   ],
   "reminders_sent": [
+    {
+      "id": "rem_1789892691437",
+      "client_id": "CLI-1789892691434-3Z6G",
+      "reminder_number": 1,
+      "missing_items": [
+        "prior_year_accounts",
+        "payroll_summary",
+        "id",
+        "proof_of_address",
+        "vat_certificate",
+        "law"
+      ],
+      "recipient_email": "john.smith@apextrading.co.uk",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Year-end accounts",
+      "sent_at": "2026-09-20T08:24:51.437Z",
+      "channel": "email",
+      "status": "logged"
+    },
+    {
+      "id": "rem_1789892665279",
+      "client_id": "CLI-1789892665276-AFU4",
+      "reminder_number": 1,
+      "missing_items": [
+        "bank_statement",
+        "id",
+        "proof_of_address",
+        "expense_records"
+      ],
+      "recipient_email": "usman.ali@apextrading.co.uk",
+      "subject": "Action Required: Welcome to Apex Professional Advisory — Documents required for Payroll",
+      "sent_at": "2026-09-20T08:24:25.279Z",
+      "channel": "email",
+      "status": "logged"
+    },
     {
       "id": "rem_1789833066599",
       "client_id": "CLI-1789833066597-Z2DS",
