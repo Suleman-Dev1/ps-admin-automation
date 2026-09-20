@@ -15,7 +15,10 @@ import {
   X, 
   FileText, 
   ShieldCheck, 
-  Calendar 
+  Calendar,
+  Bell,
+  Check,
+  AlertCircle
 } from "lucide-react";
 import Link from "next/link";
 
@@ -26,11 +29,14 @@ export default function TokenizedUploadPage() {
 
   const [loading, setLoading] = useState(true);
   const [client, setClient] = useState<any>(null);
+  const [reminders, setReminders] = useState<any[]>([]);
+  const [staffSummary, setStaffSummary] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<any>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [demoNotice, setDemoNotice] = useState<string | null>(null);
 
   // File upload input state
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -49,6 +55,8 @@ export default function TokenizedUploadPage() {
       if (res.ok) {
         const data = await res.json();
         setClient(data.client);
+        setReminders(data.reminders || []);
+        setStaffSummary(data.staff_summary || null);
         if (data.client?.missing_items?.length > 0) {
           setSyntheticDocType(data.client.missing_items[0]);
         }
@@ -67,10 +75,12 @@ export default function TokenizedUploadPage() {
     fetchClientData();
   }, [token]);
 
+  // Standard File / Text Upload
   const handleFileUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     setUploadError(null);
     setUploadResult(null);
+    setDemoNotice(null);
 
     if (!selectedFile && !fileContent.trim()) {
       setUploadError("Please choose a file or enter document text to upload.");
@@ -99,6 +109,7 @@ export default function TokenizedUploadPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setUploadResult(data);
+        if (data.staff_summary) setStaffSummary(data.staff_summary);
         setFileContent("");
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = "";
@@ -113,10 +124,12 @@ export default function TokenizedUploadPage() {
     }
   };
 
+  // Quick Single Synthetic Document Upload
   const handleQuickSynthetic = async (type: string, content: string) => {
     setUploadError(null);
     setUploading(true);
     setUploadResult(null);
+    setDemoNotice(null);
 
     const formData = new FormData();
     formData.append("doc_type_hint", type);
@@ -132,12 +145,76 @@ export default function TokenizedUploadPage() {
       const data = await res.json();
       if (res.ok && data.success) {
         setUploadResult(data);
+        if (data.staff_summary) setStaffSummary(data.staff_summary);
         fetchClientData();
       } else {
         setUploadError(data.error || "Synthetic upload failed");
       }
     } catch (err: any) {
       setUploadError("Upload failed: " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Automated Test Step 1: Upload several synthetic documents & deliberately leave 1 missing
+  const handleSyntheticPartial = async () => {
+    setUploadError(null);
+    setUploading(true);
+    setUploadResult(null);
+    setDemoNotice(null);
+
+    try {
+      const res = await fetch(`/api/upload/${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "synthetic_partial" }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUploadResult(data);
+        setDemoNotice(
+          `System identified deliberately missing item: "${data.deliberately_missing?.replace(/_/g, " ")}". A real reminder has been generated and dispatched to ${data.client?.contact?.email}. Meeting booking remains strictly locked.`
+        );
+        fetchClientData();
+      } else {
+        setUploadError(data.error || "Partial synthetic upload failed.");
+      }
+    } catch (err: any) {
+      setUploadError("Partial upload failed: " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Automated Test Step 2: Upload the missing item to complete the checklist
+  const handleSyntheticComplete = async () => {
+    setUploadError(null);
+    setUploading(true);
+    setUploadResult(null);
+    setDemoNotice(null);
+
+    try {
+      const res = await fetch(`/api/upload/${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "synthetic_complete" }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setUploadResult(data);
+        if (data.staff_summary) setStaffSummary(data.staff_summary);
+        setDemoNotice(
+          "Checklist is now 100% complete! OpenAI GPT-4o prepared the staff summary, updated workflow status to 'Ready', and unlocked Cal.com meeting booking."
+        );
+        fetchClientData();
+      } else {
+        setUploadError(data.error || "Completion upload failed.");
+      }
+    } catch (err: any) {
+      setUploadError("Completion upload failed: " + err.message);
     } finally {
       setUploading(false);
     }
@@ -172,6 +249,7 @@ export default function TokenizedUploadPage() {
   const receivedCount = Math.max(0, checklist.length - missing.length);
   const percentComplete = checklist.length > 0 ? Math.round((receivedCount / checklist.length) * 100) : 100;
   const isComplete = missing.length === 0 && checklist.length > 0;
+  const latestReminder = reminders.length > 0 ? reminders[0] : (uploadResult?.reminder || uploadResult?.reminder_dispatched);
 
   return (
     <div className="space-y-6">
@@ -185,7 +263,7 @@ export default function TokenizedUploadPage() {
             Client Document Upload & Verification Hub
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Client: <strong>{client.company_name || client.contact?.name}</strong> • Legal Entity: {client.business_type} • Service: {client.service_requested}
+            Client: <strong>{client.company_name || client.contact?.name}</strong> &bull; Legal Entity: {client.business_type} &bull; Service: {client.service_requested}
           </p>
         </div>
 
@@ -194,20 +272,42 @@ export default function TokenizedUploadPage() {
             <div className="text-[11px] text-slate-400 font-semibold uppercase">Onboarding Progress</div>
             <div className="text-sm font-bold text-slate-900">{percentComplete}% Complete ({receivedCount}/{checklist.length})</div>
           </div>
-          <div className="w-12 h-12 rounded-full border-4 border-slate-100 flex items-center justify-center font-bold text-xs" style={{ borderColor: isComplete ? "#10b981" : "var(--brand-primary, #1e3a8a)" }}>
+          <div 
+            className="w-12 h-12 rounded-full border-4 flex items-center justify-center font-bold text-xs shadow-xs" 
+            style={{ 
+              borderColor: isComplete ? "#10b981" : "#ef4444",
+              color: isComplete ? "#047857" : "#b91c1c",
+              backgroundColor: isComplete ? "#ecfdf5" : "#fef2f2"
+            }}
+          >
             {percentComplete}%
           </div>
         </div>
       </div>
 
+      {/* Demo Scenario Notification Alert */}
+      {demoNotice && (
+        <div className="p-4 bg-blue-50 border-2 border-blue-400 rounded-xl text-blue-950 text-xs flex items-start gap-3 shadow-xs animate-in fade-in">
+          <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">
+            ℹ️
+          </div>
+          <div className="flex-1">
+            <div className="font-bold text-sm">Automated Test Execution Update</div>
+            <p className="mt-0.5 text-blue-900 leading-relaxed">{demoNotice}</p>
+          </div>
+        </div>
+      )}
+
       {/* 2-Column Responsive Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: Client Profile & Live Checklist Tracker */}
+        {/* =================================================================== */}
+        {/* Left Column (5 Cols): Client Profile, Checklist & Gated Meeting Card */}
+        {/* =================================================================== */}
         <div className="lg:col-span-5 space-y-6">
           
           {/* Client Info Card */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Client Profile</span>
               <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold ${isComplete ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"}`}>
@@ -226,47 +326,69 @@ export default function TokenizedUploadPage() {
           <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                Mandatory Documents Checklist ({receivedCount} / {checklist.length})
+                Document Checklist ({receivedCount} / {checklist.length})
               </h3>
-              <span className={`text-xs font-bold ${isComplete ? "text-emerald-600" : "text-amber-600"}`}>
-                {isComplete ? "✓ All Received" : `${missing.length} Missing`}
+              <span className={`text-xs font-bold ${isComplete ? "text-emerald-600" : "text-red-600"}`}>
+                {isComplete ? "✓ All Uploaded" : `${missing.length} Missing (Action Required)`}
               </span>
             </div>
 
             {/* Progress Bar */}
-            <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
               <div 
                 className="h-full transition-all duration-500 rounded-full"
                 style={{ 
                   width: `${percentComplete}%`, 
-                  backgroundColor: isComplete ? "#10b981" : "var(--brand-primary, #1e3a8a)" 
+                  backgroundColor: isComplete ? "#10b981" : "#ef4444" 
                 }}
               />
             </div>
 
-            {/* Checklist Items List */}
-            <div className="space-y-2">
+            {/* Checklist Items List (TURNS RED IF MISSING) */}
+            <div className="space-y-2.5">
               {checklist.map((item) => {
                 const isMissing = missing.includes(item);
                 return (
                   <div
                     key={item}
-                    className={`flex items-center justify-between p-3 rounded-xl border text-xs transition ${
+                    className={`flex items-center justify-between p-3.5 rounded-xl border-2 transition shadow-xs ${
                       isMissing
-                        ? "bg-red-50/60 border-red-200 text-red-900"
-                        : "bg-emerald-50/60 border-emerald-200 text-emerald-900"
+                        ? "border-red-500 bg-red-50/90 text-red-950"
+                        : "border-emerald-500 bg-emerald-50/90 text-emerald-950"
                     }`}
                   >
-                    <div className="flex items-center gap-2 font-medium capitalize">
-                      {isMissing ? (
-                        <AlertTriangle className="w-4 h-4 text-red-500 shrink-0" />
-                      ) : (
-                        <FileCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                      )}
-                      <span>{item.replace(/_/g, " ")}</span>
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border ${
+                          isMissing 
+                            ? "bg-red-100 border-red-300 text-red-600" 
+                            : "bg-emerald-100 border-emerald-300 text-emerald-600"
+                        }`}
+                      >
+                        {isMissing ? (
+                          <AlertTriangle className="w-4 h-4 animate-pulse" />
+                        ) : (
+                          <CheckCircle2 className="w-4 h-4" />
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-bold text-xs capitalize">
+                          {item.replace(/_/g, " ")}
+                        </div>
+                        <div className={`text-[10px] font-medium ${isMissing ? "text-red-700" : "text-emerald-700"}`}>
+                          {isMissing ? "❌ Missing — Required before booking" : "✓ Uploaded & Verified by OpenAI"}
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-white/80 border border-current">
-                      {isMissing ? "Missing" : "Verified"}
+
+                    <span 
+                      className={`text-[10px] font-black uppercase px-2.5 py-1 rounded-full shadow-xs shrink-0 ${
+                        isMissing
+                          ? "bg-red-600 text-white"
+                          : "bg-emerald-600 text-white"
+                      }`}
+                    >
+                      {isMissing ? "MISSING" : "VERIFIED"}
                     </span>
                   </div>
                 );
@@ -274,38 +396,83 @@ export default function TokenizedUploadPage() {
             </div>
           </div>
 
-          {/* Gated Cal.com Meeting Status Box */}
-          <div className={`p-5 rounded-2xl border transition ${isComplete ? "bg-emerald-50 border-emerald-300" : "bg-amber-50/70 border-amber-200"}`}>
-            <div className="flex items-center gap-2 mb-1.5">
-              {isComplete ? (
-                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-              ) : (
-                <Lock className="w-5 h-5 text-amber-600" />
-              )}
-              <h4 className="text-sm font-bold text-slate-900">
-                {isComplete ? "Meeting Booking Unlocked!" : "Meeting Booking Gated"}
-              </h4>
+          {/* Gated Cal.com Meeting Status Box (STRICTLY LOCKED IF ANY ITEM IS MISSING) */}
+          <div 
+            className={`p-6 rounded-2xl border-2 shadow-xs transition space-y-3.5 ${
+              isComplete
+                ? "border-emerald-500 bg-emerald-50 text-emerald-950"
+                : "border-red-400 bg-red-50/80 text-red-950"
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <div 
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0 font-bold ${
+                  isComplete ? "bg-emerald-600" : "bg-red-600"
+                }`}
+              >
+                {isComplete ? <CheckCircle2 className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
+              </div>
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-wider">
+                  {isComplete ? "Meeting Booking Unlocked!" : "Meeting Booking Gated & Locked"}
+                </h4>
+                <p className={`text-[11px] font-bold ${isComplete ? "text-emerald-700" : "text-red-700"}`}>
+                  {isComplete
+                    ? `All ${checklist.length} required documents verified`
+                    : `Cannot proceed — ${missing.length} document(s) missing`}
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-slate-600 leading-relaxed mb-3">
+
+            <p className={`text-xs leading-relaxed ${isComplete ? "text-emerald-800" : "text-red-800"}`}>
               {isComplete
-                ? "All required documents are verified. You are eligible to book your discovery consultation with our senior advisory team."
-                : `Scheduling is locked until all ${checklist.length} mandatory documents are uploaded and verified by OpenAI.`}
+                ? "All mandatory documents have been classified and verified by OpenAI GPT-4o. Staff summary is ready. You can now schedule your discovery consultation."
+                : `Meeting booking is strictly disabled until all ${checklist.length} documents are uploaded and verified. Our professional staff cannot conduct discovery consultations without a complete financial file.`}
             </p>
+
+            {/* Action Button: Disabled if missing, Active if complete */}
             {isComplete ? (
               <Link
                 href={`/book/${token}`}
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase shadow-md transition transform hover:-translate-y-0.5"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Open Cal.com Meeting Scheduler</span>
+                <span>Open Cal.com Meeting Scheduler Now</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             ) : (
-              <div className="text-[11px] text-amber-800 font-medium">
-                Upload remaining {missing.length} documents on the right to unlock calendar.
+              <button
+                type="button"
+                disabled
+                className="w-full py-3 px-4 rounded-xl bg-red-100 border-2 border-red-300 text-red-700 font-black text-xs uppercase flex items-center justify-center gap-2 cursor-not-allowed opacity-90 shadow-2xs"
+              >
+                <Lock className="w-3.5 h-3.5" />
+                <span>Booking Blocked — Upload Missing Items First</span>
+              </button>
+            )}
+
+            {!isComplete && (
+              <div className="text-[11px] text-red-700 bg-white/80 p-3 rounded-xl border border-red-200 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                <span>Meeting calendar will automatically unlock in green as soon as all missing items turn verified.</span>
               </div>
             )}
           </div>
+
+          {/* Real Reminder Sent Notification Banner */}
+          {latestReminder && (
+            <div className="p-4 bg-amber-50 border-2 border-amber-300 rounded-2xl text-amber-950 text-xs shadow-xs space-y-2">
+              <div className="flex items-center gap-2 font-bold text-amber-900">
+                <Bell className="w-4 h-4 text-amber-600" />
+                <span>Real Reminder Generated & Dispatched</span>
+              </div>
+              <div className="text-[11px] text-amber-800 space-y-1">
+                <div>Subject: <strong>&quot;{latestReminder.subject}&quot;</strong></div>
+                <div>Recipient: <span className="font-mono">{latestReminder.recipient_email}</span></div>
+                <div>Status: <span className="font-bold uppercase text-emerald-700">{latestReminder.status || "LOGGED"}</span> &bull; Sent: {new Date(latestReminder.sent_at || Date.now()).toLocaleTimeString()}</div>
+              </div>
+            </div>
+          )}
 
           {/* Compliance Disclaimer */}
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-2.5">
@@ -317,9 +484,12 @@ export default function TokenizedUploadPage() {
 
         </div>
 
-        {/* Right Column: Upload Box, Synthetic Testing & Live OpenAI Results */}
+        {/* =================================================================== */}
+        {/* Right Column (7 Cols): Upload Controls, Test Scenarios & Results */}
+        {/* =================================================================== */}
         <div className="lg:col-span-7 space-y-6">
           
+          {/* Main Upload Box */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
@@ -330,17 +500,62 @@ export default function TokenizedUploadPage() {
             </div>
 
             {uploadError && (
-              <div className="p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-800 text-xs font-semibold flex items-center gap-2">
+              <div className="p-3.5 bg-red-50 border-2 border-red-300 rounded-xl text-red-800 text-xs font-semibold flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
                 <span>{uploadError}</span>
               </div>
             )}
 
-            {/* Quick Synthetic Upload Testing Buttons */}
+            {/* Prominent Automated 2-Step Test Scenario Buttons */}
+            <div className="p-5 bg-gradient-to-br from-blue-50/70 to-indigo-50/50 border-2 border-blue-200 rounded-2xl space-y-3 shadow-xs">
+              <div className="text-xs font-bold text-blue-950 flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-blue-600" />
+                <span>Automated Test Workflow (Missing Document & Gate Verification):</span>
+              </div>
+              <p className="text-[11px] text-blue-900 leading-relaxed">
+                Test the complete intake gate scenario in 2 clicks: upload documents leaving 1 deliberately missing to verify the locked red gate and reminder, then complete the checklist to unlock booking.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {/* Step 1 Button */}
+                <button
+                  type="button"
+                  onClick={handleSyntheticPartial}
+                  disabled={uploading}
+                  className="p-3.5 rounded-xl bg-white border-2 border-amber-400 text-amber-950 hover:bg-amber-50 text-left transition shadow-xs disabled:opacity-50 group"
+                >
+                  <div className="font-bold text-xs flex items-center justify-between text-amber-900">
+                    <span>⚡ Step 1: Upload Partial Docs</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-1 transition" />
+                  </div>
+                  <div className="text-[11px] text-amber-700 mt-1">
+                    Uploads synthetic docs &amp; leaves 1 deliberately missing. Verifies <strong>RED</strong> missing status, dispatches reminder, keeps booking locked.
+                  </div>
+                </button>
+
+                {/* Step 2 Button */}
+                <button
+                  type="button"
+                  onClick={handleSyntheticComplete}
+                  disabled={uploading}
+                  className="p-3.5 rounded-xl bg-white border-2 border-emerald-400 text-emerald-950 hover:bg-emerald-50 text-left transition shadow-xs disabled:opacity-50 group"
+                >
+                  <div className="font-bold text-xs flex items-center justify-between text-emerald-900">
+                    <span>⚡ Step 2: Upload Missing Item</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-emerald-600 group-hover:translate-x-1 transition" />
+                  </div>
+                  <div className="text-[11px] text-emerald-700 mt-1">
+                    Uploads the missing item. Turns checklist <strong>GREEN</strong>, compiles staff summary via OpenAI GPT-4o, and unlocks Cal.com booking.
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Individual Synthetic Shortcuts */}
             <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5">
               <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-                <span>Instant Ingestion Shortcuts (1-Click Test Documents):</span>
+                <span>Or Upload Individual Synthetic Documents:</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -429,7 +644,7 @@ export default function TokenizedUploadPage() {
               </div>
             </div>
 
-            {/* Custom Upload Form */}
+            {/* Custom File or OCR Upload Form */}
             <form onSubmit={handleFileUpload} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -535,6 +750,53 @@ export default function TokenizedUploadPage() {
                 </div>
               </div>
             )}
+
+            {/* Staff Summary Display (Appears when checklist is complete) */}
+            {staffSummary && (
+              <div className="p-5 bg-slate-900 text-white rounded-2xl border-2 border-emerald-500 space-y-3.5 shadow-md">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                  <div className="font-bold text-xs text-emerald-400 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" />
+                    <span>OpenAI GPT-4o Pre-Meeting Staff Briefing (Automated Output)</span>
+                  </div>
+                  <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-900 text-emerald-300 border border-emerald-700">
+                    Ready for Staff
+                  </span>
+                </div>
+
+                <div className="text-xs space-y-3">
+                  <div>
+                    <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">1. Factual Business Profile:</span>
+                    <p className="text-slate-200 mt-0.5 leading-relaxed">{staffSummary.business_profile}</p>
+                  </div>
+
+                  {staffSummary.key_figures_extracted && (
+                    <div>
+                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">2. Extracted Financial Figures:</span>
+                      <pre className="text-[10px] text-blue-300 bg-slate-950 p-2.5 rounded-xl border border-slate-800 mt-1 whitespace-pre-wrap font-mono">
+                        {JSON.stringify(staffSummary.key_figures_extracted, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+
+                  {staffSummary.open_questions && staffSummary.open_questions.length > 0 && (
+                    <div>
+                      <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px]">3. Suggested Advisor Discussion Points:</span>
+                      <ul className="list-disc pl-4 text-[11px] text-slate-300 space-y-1 mt-1">
+                        {staffSummary.open_questions.map((q: string, i: number) => (
+                          <li key={i}>{q}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="pt-2 border-t border-slate-800 text-[10px] text-slate-400 italic">
+                    <strong>Statutory Disclaimer:</strong> {staffSummary.advice_disclaimer}
+                  </div>
+                </div>
+              </div>
+            )}
+
           </div>
 
         </div>
