@@ -174,62 +174,62 @@ export default function DynamicIntakePage() {
   return (
     <div className="space-y-8">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 mb-2">
             <Building className="w-3.5 h-3.5" /> Client Onboarding Portal
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
             Client Intake &amp; Dynamic Checklist
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Welcome to {theme.firm_name}. Complete this form to generate your customized onboarding requirements.
           </p>
         </div>
-        <div className="flex items-center gap-2 text-xs bg-slate-900/80 border border-slate-800 px-4 py-2.5 rounded-2xl text-slate-300 shrink-0">
-          <Clock className="w-4 h-4 text-blue-400 shrink-0" />
-          <span>Estimated time: <strong className="text-white">2 minutes</strong></span>
+        <div className="flex items-center gap-2 text-xs bg-white border border-slate-200 px-4 py-2.5 rounded-2xl text-slate-700 shadow-2xs shrink-0">
+          <Clock className="w-4 h-4 text-blue-600 shrink-0" />
+          <span>Estimated time: <strong className="text-slate-900">2 minutes</strong></span>
         </div>
       </div>
 
       {submissionResult ? (
         /* Success Framed Card */
-        <div className="bg-slate-900/90 border border-emerald-500/30 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl">
-          <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center shadow-lg">
+        <div className="bg-white border border-emerald-200 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm">
+          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200 mx-auto flex items-center justify-center shadow-xs">
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <div className="space-y-2 max-w-xl mx-auto">
-            <h2 className="text-2xl font-bold text-white">Intake Record Created Successfully!</h2>
-            <p className="text-sm text-slate-400 leading-relaxed">
+            <h2 className="text-2xl font-bold text-slate-900">Intake Record Created Successfully!</h2>
+            <p className="text-sm text-slate-600 leading-relaxed">
               Your profile has been registered, synced with our CRM, and your tailored onboarding checklist has been dynamically provisioned.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto text-left">
-            <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-2xl">
-              <div className="text-[11px] font-semibold text-slate-400 uppercase">Client Reference ID</div>
-              <div className="font-mono text-sm font-bold text-white mt-1">{clientData?.id}</div>
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">Client Reference ID</div>
+              <div className="font-mono text-sm font-bold text-slate-900 mt-1">{clientData?.id}</div>
             </div>
-            <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-2xl">
-              <div className="text-[11px] font-semibold text-slate-400 uppercase">CRM Sync Status</div>
-              <div className="text-sm font-bold text-blue-400 mt-1 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-blue-400" />
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">CRM Sync Status</div>
+              <div className="text-sm font-bold text-blue-700 mt-1 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-blue-600" />
                 <span>Connected</span>
               </div>
             </div>
-            <div className="p-4 bg-slate-950/60 border border-slate-800 rounded-2xl">
-              <div className="text-[11px] font-semibold text-slate-400 uppercase">Lifecycle Status</div>
-              <div className="text-sm font-bold text-amber-400 mt-1">Awaiting Documents</div>
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+              <div className="text-[11px] font-semibold text-slate-500 uppercase">Lifecycle Status</div>
+              <div className="text-sm font-bold text-amber-700 mt-1">Awaiting Documents</div>
             </div>
           </div>
 
-          <div className="p-5 bg-slate-950/60 border border-slate-800 rounded-2xl max-w-2xl mx-auto text-left">
-            <div className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5">
+          <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl max-w-2xl mx-auto text-left">
+            <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">
               Required Documents Checklist ({clientData?.checklist_required?.length || 0} items)
             </div>
             <div className="flex flex-wrap gap-2">
               {(clientData?.checklist_required || []).map((doc: string) => (
-                <span key={doc} className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700/80 text-xs font-mono font-medium text-slate-200 capitalize">
+                <span key={doc} className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-mono font-medium text-slate-800 capitalize shadow-2xs">
                   {doc.replace(/_/g, " ")}
                 </span>
               ))}
@@ -239,7 +239,7 @@ export default function DynamicIntakePage() {
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href={`/upload/${clientData?.upload_token}`}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl text-white font-extrabold text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)] bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 flex items-center justify-center gap-2 transition hover:scale-105"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl text-white font-extrabold text-sm shadow-sm bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2 transition hover:scale-105"
             >
               <span>Proceed to Tokenized Upload Portal</span>
               <ArrowRight className="w-4 h-4" />
@@ -247,7 +247,7 @@ export default function DynamicIntakePage() {
 
             <Link
               href={`/staff/clients/${clientData?.id}`}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-bold text-sm border border-slate-700 transition"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm border border-slate-200 transition"
             >
               View in Staff CRM
             </Link>
@@ -261,37 +261,37 @@ export default function DynamicIntakePage() {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Step Progress Tracker */}
-            <div className="bg-slate-900/70 border border-slate-800 rounded-3xl p-6 space-y-4">
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 space-y-4 shadow-xs">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Onboarding Steps
               </h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-md">
+                  <div className="w-7 h-7 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
                     1
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-white">Entity &amp; Service Selection</div>
-                    <p className="text-[11px] text-slate-400">Specify your business structure to tailor checklist</p>
+                    <div className="text-xs font-bold text-slate-900">Entity &amp; Service Selection</div>
+                    <p className="text-[11px] text-slate-500">Specify your business structure to tailor checklist</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-xl bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">
+                  <div className="w-7 h-7 rounded-xl bg-slate-100 text-slate-500 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-200">
                     2
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-300">Financial &amp; Contact Details</div>
+                    <div className="text-xs font-bold text-slate-700">Financial &amp; Contact Details</div>
                     <p className="text-[11px] text-slate-500">Provide company profile and director contact</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <div className="w-7 h-7 rounded-xl bg-slate-800 text-slate-400 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-700">
+                  <div className="w-7 h-7 rounded-xl bg-slate-100 text-slate-500 font-bold text-xs flex items-center justify-center shrink-0 border border-slate-200">
                     3
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-slate-300">Tokenized Document Upload</div>
+                    <div className="text-xs font-bold text-slate-700">Tokenized Document Upload</div>
                     <p className="text-[11px] text-slate-500">Submit files with automated OpenAI verification</p>
                   </div>
                 </div>
@@ -300,18 +300,18 @@ export default function DynamicIntakePage() {
 
             {/* Dynamic Checklist Preview Box */}
             {activeConfig && (
-              <div className="bg-gradient-to-br from-blue-950/40 to-indigo-950/40 border border-blue-800/50 rounded-3xl p-6 space-y-3">
-                <div className="font-bold text-xs text-blue-300 flex items-center gap-1.5 uppercase tracking-wider">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="bg-blue-50/70 border border-blue-200 rounded-3xl p-6 space-y-3">
+                <div className="font-bold text-xs text-blue-900 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-blue-600" />
                   <span>Required Documents Checklist Preview</span>
                 </div>
-                <p className="text-xs text-blue-200">
+                <p className="text-xs text-blue-800">
                   Based on selecting <strong>{selectedType}</strong> for <strong>{selectedService}</strong>, the following {activeConfig.required_documents?.length || 0} documents will be requested:
                 </p>
                 <div className="space-y-2 pt-1">
                   {(activeConfig.required_documents || []).map((doc) => (
-                    <div key={doc} className="flex items-center gap-2 text-xs bg-slate-900/80 border border-blue-800/40 rounded-xl px-3.5 py-2 text-blue-100 font-medium capitalize">
-                      <FileCheck className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <div key={doc} className="flex items-center gap-2 text-xs bg-white border border-blue-200 rounded-xl px-3.5 py-2 text-blue-950 font-medium capitalize shadow-2xs">
+                      <FileCheck className="w-3.5 h-3.5 text-blue-600 shrink-0" />
                       <span>{doc.replace(/_/g, " ")}</span>
                     </div>
                   ))}
@@ -320,11 +320,11 @@ export default function DynamicIntakePage() {
             )}
 
             {/* Compliance Guarantee */}
-            <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-start gap-3">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-start gap-3">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-slate-200">Administrative Automation Only:</strong>
-                <p className="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+                <strong className="text-slate-800">Administrative Automation Only:</strong>
+                <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">
                   This portal handles factual intake collation only. No regulated tax, accounting, or legal advice is given.
                 </p>
               </div>
@@ -333,13 +333,13 @@ export default function DynamicIntakePage() {
           </div>
 
           {/* Right Column: Interactive Form */}
-          <div className="lg:col-span-7 bg-slate-900/85 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+          <div className="lg:col-span-7 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
             {errorMessage && (
-              <div className="mb-6 p-4 rounded-2xl bg-red-950/40 border border-red-800/60 text-red-200 text-xs flex items-start gap-2.5">
-                <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2.5">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold">Required Information Incomplete</p>
-                  <p className="text-red-300 mt-0.5">{errorMessage}</p>
+                  <p className="text-red-700 mt-0.5">{errorMessage}</p>
                 </div>
               </div>
             )}
@@ -347,22 +347,22 @@ export default function DynamicIntakePage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Section 1: Entity & Service */}
               <div className="space-y-4">
-                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
                   Step 1: Entity &amp; Engagement
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-200 mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       Legal Business Structure *
                     </label>
                     <select
                       value={selectedType}
                       onChange={(e) => setSelectedType(e.target.value)}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white font-medium focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-medium focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                     >
                       {businessTypes.map((b) => (
-                        <option key={b.id} value={b.name} className="bg-slate-900 text-white">
+                        <option key={b.id} value={b.name} className="bg-white text-slate-900">
                           {b.name}
                         </option>
                       ))}
@@ -370,17 +370,17 @@ export default function DynamicIntakePage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-200 mb-1.5">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       Service Requested *
                     </label>
                     <select
                       value={selectedService}
                       onChange={(e) => setSelectedService(e.target.value)}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white font-medium focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 font-medium focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                     >
                       {services.map((s) => (
-                        <option key={s.id} value={s.name} className="bg-slate-900 text-white">
+                        <option key={s.id} value={s.name} className="bg-white text-slate-900">
                           {s.name}
                         </option>
                       ))}
@@ -390,13 +390,13 @@ export default function DynamicIntakePage() {
               </div>
 
               {/* Section 2: Contact Information */}
-              <div className="space-y-4 pt-4 border-t border-slate-800">
-                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400">
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
                   Step 2: Primary Contact
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-200 mb-1.5">Full Name *</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name *</label>
                     <input
                       type="text"
                       value={contactName}
@@ -405,11 +405,11 @@ export default function DynamicIntakePage() {
                         if (errorMessage) setErrorMessage(null);
                       }}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-200 mb-1.5">Email Address *</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Email Address *</label>
                     <input
                       type="email"
                       value={contactEmail}
@@ -418,11 +418,11 @@ export default function DynamicIntakePage() {
                         if (errorMessage) setErrorMessage(null);
                       }}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-200 mb-1.5">Phone Number *</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Phone Number *</label>
                     <input
                       type="tel"
                       value={contactPhone}
@@ -431,7 +431,7 @@ export default function DynamicIntakePage() {
                         if (errorMessage) setErrorMessage(null);
                       }}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                      className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                     />
                   </div>
                 </div>
@@ -439,14 +439,14 @@ export default function DynamicIntakePage() {
 
               {/* Section 3: Dynamic Form Questions */}
               {activeConfig && activeConfig.required_fields && activeConfig.required_fields.length > 0 && (
-                <div className="space-y-4 pt-4 border-t border-slate-800">
-                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-400">
+                <div className="space-y-4 pt-4 border-t border-slate-100">
+                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-blue-700">
                     Step 3: Entity &amp; Financial Schema Details
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {activeConfig.required_fields.map((field) => (
                       <div key={field.field_id}>
-                        <label className="block text-xs font-bold text-slate-200 mb-1.5">
+                        <label className="block text-xs font-bold text-slate-700 mb-1.5">
                           {field.label} {field.required ? "*" : ""}
                         </label>
 
@@ -455,10 +455,10 @@ export default function DynamicIntakePage() {
                             value={dynamicFormValues[field.field_id] || (field.options?.[0] || "")}
                             onChange={(e) => handleDynamicChange(field.field_id, e.target.value)}
                             required={field.required}
-                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                           >
                             {(field.options || []).map((opt) => (
-                              <option key={opt} value={opt} className="bg-slate-900 text-white">
+                              <option key={opt} value={opt} className="bg-white text-slate-900">
                                 {opt}
                               </option>
                             ))}
@@ -471,7 +471,7 @@ export default function DynamicIntakePage() {
                             required={field.required}
                             placeholder={field.placeholder || ""}
                             min={field.min}
-                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-700 bg-slate-950 text-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
+                            className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition"
                           />
                         )}
                       </div>
@@ -481,11 +481,11 @@ export default function DynamicIntakePage() {
               )}
 
               {/* Submit Action */}
-              <div className="pt-6 border-t border-slate-800">
+              <div className="pt-6 border-t border-slate-100">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-4 rounded-2xl font-extrabold text-white text-sm shadow-[0_0_25px_rgba(37,99,235,0.4)] bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:to-indigo-500 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:scale-100"
+                  className="w-full py-4 rounded-2xl font-extrabold text-white text-sm shadow-md bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2 transition hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 disabled:scale-100"
                 >
                   {submitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
                   <span>{submitting ? "Processing Administrative Intake..." : "Submit Client Intake & Generate Checklist"}</span>
