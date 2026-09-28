@@ -275,29 +275,38 @@ const DEFAULT_STATE: LocalDatabaseState = {
   staff_summaries: []
 };
 
-// Helper to read local file-backed state
+let memoryCache: LocalDatabaseState | null = null;
+
+// Helper to read local file-backed state with in-memory caching for serverless environments
 function getLocalState(): LocalDatabaseState {
+  if (memoryCache) {
+    return memoryCache;
+  }
   try {
     if (!fs.existsSync(LOCAL_STORE_PATH)) {
       const dir = path.dirname(LOCAL_STORE_PATH);
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
       fs.writeFileSync(LOCAL_STORE_PATH, JSON.stringify(DEFAULT_STATE, null, 2), "utf-8");
-      return JSON.parse(JSON.stringify(DEFAULT_STATE));
+      memoryCache = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      return memoryCache;
     }
     const data = fs.readFileSync(LOCAL_STORE_PATH, "utf-8");
-    return JSON.parse(data);
+    memoryCache = JSON.parse(data);
+    return memoryCache;
   } catch (err) {
-    return JSON.parse(JSON.stringify(DEFAULT_STATE));
+    memoryCache = JSON.parse(JSON.stringify(DEFAULT_STATE));
+    return memoryCache;
   }
 }
 
 function saveLocalState(state: LocalDatabaseState) {
+  memoryCache = state;
   try {
     const dir = path.dirname(LOCAL_STORE_PATH);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(LOCAL_STORE_PATH, JSON.stringify(state, null, 2), "utf-8");
   } catch (err) {
-    console.error("Failed to persist local DB state:", err);
+    // In serverless environments like Vercel with read-only root filesystems, memoryCache retains state for the instance
   }
 }
 
