@@ -125,7 +125,7 @@ export default async function HomePage() {
       </section>
 
       {/* 2. Core Bento-Grid Services */}
-      <section className="space-y-8">
+      <section id="services" className="space-y-8 scroll-mt-24">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
             <Briefcase className="w-3.5 h-3.5 text-blue-600" />
@@ -392,12 +392,12 @@ export default async function HomePage() {
       </section>
 
       {/* 4. Interactive Plan & Fee Estimator */}
-      <section className="max-w-5xl mx-auto">
+      <section id="calculator" className="max-w-5xl mx-auto scroll-mt-24">
         <InteractiveServiceEstimator />
       </section>
 
       {/* 5. 3-Step Client Journey */}
-      <section className="space-y-8">
+      <section id="process" className="space-y-8 scroll-mt-24">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
             <Clock className="w-3.5 h-3.5 text-indigo-600" />
@@ -529,7 +529,7 @@ export default async function HomePage() {
       </section>
 
       {/* 7. Frequently Asked Questions */}
-      <section className="space-y-8">
+      <section id="faq" className="space-y-8 scroll-mt-24">
         <div className="text-center max-w-xl mx-auto space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
             <HelpCircle className="w-3.5 h-3.5 text-blue-600" />
